@@ -2,6 +2,8 @@
 
 A single-page revision platform for **Computer Organization and Assembly Language (COAL / CS322)**. It turns local lecture notes, lab slides, scanned COAL pages, and past-paper photos into an interactive exam-preparation website.
 
+**Live site:** [COAL Prep Studio](https://abubakkar-khan.github.io/COAL_prep_studio/)
+
 The project is intentionally simple: open `index.html` in a browser and study. No build step, package manager, server, or internet connection is required.
 
 ## Features
@@ -89,6 +91,16 @@ Current diagram categories:
 ## Notes for GitHub
 
 This repository contains course PDFs, slide decks, and past-paper photos. Before making the repository public, confirm that you have permission to publish those files. If you only want to publish the website shell, remove or replace the source documents and generated source images first.
+
+## Future Improvements
+
+- Add a topic progress tracker with saved completion state in the browser.
+- Add exam-mode practice sets: timed MCQs, short answers, and full past-paper attempts.
+- Add searchable tags for every source page and past-paper image.
+- Add printable one-page formula sheets for last-night revision.
+- Add more worked examples for FLAGS, protected-mode descriptors, and memory-bank questions.
+- Add a mistake notebook where students can save weak topics and revisit them before the exam.
+- Add optional audio-style teacher notes or quick explainers for difficult topics.
 
 ## Development Notes
 
