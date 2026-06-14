@@ -1,0 +1,781 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COAL Exam Prep Studio</title>
+<style>
+:root{
+  --bg:#f6f4ee;
+  --panel:#fffdfa;
+  --panel2:#11151b;
+  --ink:#111318;
+  --muted:#606975;
+  --line:#171a20;
+  --line2:#272d35;
+  --accent:#2f6df6;
+  --accent2:#f5d84c;
+  --cold:#00a3ad;
+  --bad:#ff3b30;
+  --good:#008f61;
+  --paper:#fffdf5;
+  --soft:#eef0ea;
+  --shadow:8px 8px 0 rgba(17,19,24,.92);
+  --radius:0;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--ink) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--ink) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(180deg, color-mix(in srgb, var(--accent) 13%, transparent), transparent 430px),
+    var(--bg);
+  background-size:44px 44px,44px 44px,auto,auto;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  letter-spacing:0;
+}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.wrap{max-width:1320px;margin:0 auto;padding:0 24px}
+.topbar{
+  position:sticky;top:0;z-index:20;
+  border-bottom:2px solid var(--line);
+  background:color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter:blur(18px);
+}
+.nav{display:flex;align-items:center;gap:18px;min-height:72px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:950;text-transform:uppercase}
+.mark{display:grid;place-items:center;width:42px;height:42px;border:2px solid var(--line);background:var(--accent2);color:#020403;font-weight:950;box-shadow:5px 5px 0 var(--line)}
+.navlinks{margin-left:auto;display:flex;gap:6px;flex-wrap:wrap}
+.navlinks a,.btn,.chip{
+  border:2px solid var(--line);
+  background:var(--panel);
+  color:var(--ink);
+  border-radius:0;
+  padding:10px 12px;
+  font-weight:900;
+  font-size:11px;
+  text-transform:uppercase;
+}
+.navlinks a:hover,.btn:hover,.chip:hover{border-color:var(--line);color:#fff;background:var(--line)}
+.btn.primary{background:var(--accent);border-color:var(--line);color:#fff}
+.btn.warn{background:var(--accent2);border-color:var(--line);color:#080a0d}
+.hero{padding:54px 0 30px}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) 410px;gap:22px;align-items:stretch}
+.hero h1{font-size:clamp(46px,8vw,108px);line-height:.86;margin:12px 0 18px;letter-spacing:0;text-transform:uppercase;font-weight:950;max-width:980px}
+.eyebrow{color:var(--accent);font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:0}
+.lead{max-width:760px;color:var(--muted);font-size:19px;line-height:1.55;margin:0;font-weight:650}
+.panel,.card,.tool,.source-viewer{
+  border:2px solid var(--line);
+  background:
+    linear-gradient(135deg,rgba(11,99,255,.065),transparent 38%),
+    var(--panel);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+}
+.panel{padding:20px;position:relative;overflow:hidden}
+.panel:before,.card:before,.tool:before,.paper-shell:before{
+  content:"";
+  position:absolute;
+  inset:0 auto auto 0;
+  width:58px;height:3px;
+  background:var(--accent);
+}
+.card,.tool{position:relative;overflow:hidden}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.stat{padding:14px;border:2px solid var(--line);border-radius:0;background:var(--panel)}
+.stat b{display:block;font-size:34px;line-height:1;font-weight:950}.stat span{color:var(--muted);font-size:11px;font-weight:900;text-transform:uppercase}
+.hero-plate{margin-top:16px;border:2px solid var(--line);background:#fffdf7;padding:12px}
+.hero-plate svg{display:block;width:100%;height:auto}
+.plate-label{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:10px;font-weight:950;text-transform:uppercase;margin-top:10px}
+.section{padding:42px 0}
+.section-head{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px;align-items:end;margin-bottom:18px;border-top:2px solid var(--line);padding-top:18px}
+.section h2{font-size:clamp(30px,4vw,52px);line-height:.92;margin:0 0 10px;letter-spacing:0;text-transform:uppercase;font-weight:950}
+.section p{color:var(--muted);line-height:1.55}
+.section-head p{margin:0;max-width:760px}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.search,.input,select{
+  border:2px solid var(--line);
+  border-radius:0;
+  background:var(--panel);
+  color:var(--ink);
+  padding:11px 12px;
+  min-height:42px;
+}
+.search{min-width:260px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.card{padding:18px;min-width:0}
+.card h3,.tool h3{margin:0 0 10px;font-size:20px;line-height:1.05;text-transform:uppercase}
+.card p{margin:0 0 12px}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.tag{display:inline-flex;align-items:center;min-height:25px;border:1px solid var(--line);border-radius:0;padding:4px 8px;background:var(--panel);color:var(--ink);font-size:10px;font-weight:900;text-transform:uppercase}
+.tag.hot{border-color:var(--line);color:#080a0d;background:var(--accent2)}
+.tag.ok{border-color:var(--line);color:#fff;background:var(--accent)}
+.split{display:grid;grid-template-columns:270px minmax(0,1fr);gap:14px}
+.side{position:sticky;top:86px;align-self:start;border:2px solid var(--line);border-radius:0;background:var(--panel);overflow:hidden;box-shadow:7px 7px 0 var(--line)}
+.lesson-btn{display:block;width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--muted);padding:12px;text-align:left;font-weight:800}
+.lesson-btn.active,.lesson-btn:hover{background:var(--line);color:#fff}
+.lesson-body{border:2px solid var(--line);border-radius:0;background:var(--panel);padding:22px;box-shadow:var(--shadow)}
+.lesson-title{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.lesson-title h3{font-size:28px;margin:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.note{border:1px solid var(--line);border-radius:0;background:var(--soft);padding:14px}
+.note h4{margin:0 0 8px;color:var(--ink);text-transform:uppercase}
+.list{margin:0;padding-left:20px;color:var(--ink);line-height:1.55}
+.exam-list{display:grid;gap:10px}
+.exam-item{border-left:5px solid var(--accent);background:var(--soft);border-radius:0;padding:12px}
+.exam-item b{color:var(--ink)}.exam-item small{display:block;color:var(--muted);margin-top:6px;line-height:1.45}
+.diagram-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.diagram-tab{border:2px solid var(--line);background:var(--panel);color:var(--ink);padding:10px 12px;font-size:11px;font-weight:950;text-transform:uppercase}
+.diagram-tab.active,.diagram-tab:hover{background:var(--accent2)}
+.diagram-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.diagram{border:2px solid var(--line);border-radius:0;background:var(--panel);padding:0;overflow:hidden;position:relative;box-shadow:var(--shadow)}
+.diagram h3{margin:0;padding:14px 16px;border-bottom:1px solid var(--line);font-size:16px;text-transform:uppercase}
+.diagram figcaption{padding:12px 16px;border-top:1px solid var(--line);color:var(--muted);line-height:1.5}
+.mermaid-render{padding:14px;background:#fffdf7;overflow:auto}
+.mermaid-svg{display:block;width:100%;height:auto;min-width:680px}
+.mermaid-node rect{fill:#fff;stroke:var(--line);stroke-width:2}
+.mermaid-node.accent rect{fill:#eaf1ff}
+.mermaid-node.warn rect{fill:#fff3a8}
+.mermaid-node.soft rect{fill:#eef7f6}
+.mermaid-node text{fill:var(--ink);font-weight:850;font-size:14px}
+.mermaid-edge{stroke:#3a4654;stroke-width:2.4;fill:none}
+.mermaid-label{fill:#43505d;font-size:12px;font-weight:800}
+.diagram-source{border-top:1px solid var(--line);background:#f1f3ed;color:#38414b;font-family:Consolas,monospace;font-size:12px}
+.diagram-source summary{cursor:pointer;padding:10px 16px;font-family:Inter,Arial,sans-serif;font-weight:900;text-transform:uppercase;color:var(--ink)}
+.diagram-source pre{margin:0;white-space:pre-wrap;padding:0 16px 12px}
+.flow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.box,.bit,.stack-cell{
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  border-radius:0;
+  padding:10px;
+  text-align:center;
+  font-weight:800;
+}
+.arrow{color:var(--accent);font-weight:900}
+.reg{display:grid;grid-template-columns:repeat(8,1fr);gap:4px}
+.bit{font-size:11px;padding:8px 3px}
+.bit.accent{border-color:rgba(98,214,197,.7);background:rgba(98,214,197,.12)}
+.banks{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.bank{min-height:86px;display:grid;place-items:center;border:2px solid var(--line);border-radius:0;background:#fff;text-align:center;font-weight:900}
+.bank.active{border-color:var(--line);background:#eaf1ff}
+.tools-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tool{padding:16px}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.field{display:grid;gap:6px;margin-bottom:10px}
+.field label{color:var(--muted);font-size:12px;font-weight:900;text-transform:uppercase}
+.output{
+  white-space:pre-wrap;
+  border:2px solid var(--line);
+  border-radius:0;
+  background:#fffdf7;
+  color:var(--ink);
+  padding:12px;
+  min-height:74px;
+  line-height:1.45;
+}
+.flag-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:10px}
+.flag{border:2px solid var(--line);border-radius:0;padding:8px;text-align:center;background:#fff;font-weight:900}
+.flag.on{border-color:var(--line);background:#eaf1ff}
+.stack-box{display:grid;gap:6px;margin-top:10px;max-width:260px}
+.quiz-box{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:14px}
+.question{font-size:26px;font-weight:900;line-height:1.2;margin:10px 0}
+.answers{display:grid;gap:8px}
+.answer{width:100%;text-align:left;border:2px solid var(--line);border-radius:0;background:#fff;color:var(--ink);padding:12px;font-weight:800}
+.answer.correct{border-color:var(--good);background:rgba(139,217,134,.14)}
+.answer.wrong{border-color:var(--bad);background:rgba(255,107,107,.14)}
+.paper-shell{position:relative;border:2px solid var(--line);background:var(--panel);box-shadow:var(--shadow);display:grid;grid-template-columns:310px minmax(0,1fr)}
+.paper-tabs{border-right:2px solid var(--line);background:var(--soft)}
+.paper-tab{display:block;width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;color:#222831;padding:14px;text-align:left;font-weight:900;text-transform:uppercase}
+.paper-tab{color:var(--ink)}
+.paper-tab small{display:block;color:var(--muted);margin-top:5px;text-transform:none;font-weight:700;line-height:1.35}
+.paper-tab.active,.paper-tab:hover{background:var(--line);color:#fff}
+.paper-tab.active small,.paper-tab:hover small{color:#cfd6df}
+.paper-content{padding:18px;display:grid;gap:14px}
+.paper-hero{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:14px;border-bottom:2px solid var(--line);padding-bottom:14px}
+.paper-hero h3{font-size:30px;margin:0;text-transform:uppercase;line-height:1}
+.paper-hero p{margin:8px 0 0;color:var(--muted)}
+.paper-hero img{width:100%;height:150px;object-fit:cover;border:2px solid var(--line);background:#fff}
+.qa-grid{display:grid;gap:12px}
+.qa-card{border:1px solid var(--line);background:var(--soft);padding:14px}
+.qa-card h4{margin:0 0 8px;font-size:18px;text-transform:uppercase}
+.answer-block{display:grid;gap:8px;color:var(--ink);line-height:1.55}
+.answer-block b{color:var(--ink)}
+.marks{display:inline-flex;align-items:center;background:var(--accent2);border:1px solid var(--line);padding:3px 7px;font-size:10px;font-weight:950;text-transform:uppercase;margin-bottom:8px}
+.topic-detail-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-top:14px}
+.formula-strip{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.formula-strip span{display:inline-flex;border:2px solid var(--line);background:var(--accent2);padding:8px 10px;font-family:Consolas,monospace;font-weight:900}
+.quiz-progress{height:12px;border:2px solid var(--line);background:var(--panel);margin:10px 0 14px}
+.quiz-progress span{display:block;height:100%;background:var(--accent);width:0;transition:width .25s ease}
+.quiz-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.quiz-hint{color:var(--muted);font-size:13px;line-height:1.45;margin-top:10px}
+.cheat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.table{width:100%;border-collapse:collapse;font-size:14px}
+.table th,.table td{border-bottom:1px solid var(--line);padding:9px;text-align:left;vertical-align:top}
+.table th{color:var(--ink);background:var(--accent2)}
+.source-layout{display:grid;grid-template-columns:330px minmax(0,1fr);gap:14px}
+.source-list{border:2px solid var(--line);border-radius:0;background:var(--panel);max-height:680px;overflow:auto;box-shadow:7px 7px 0 var(--line)}
+.source-item{display:grid;grid-template-columns:58px 1fr;gap:10px;padding:10px;border-bottom:1px solid var(--line);cursor:pointer}
+.source-item:hover,.source-item.active{background:var(--accent2)}
+.source-item img{width:58px;height:76px;object-fit:cover;border-radius:0;border:1px solid var(--line);background:#fff}
+.source-item b{display:block;color:var(--ink)}.source-item small{color:var(--muted);line-height:1.35}
+.source-viewer{padding:12px;min-height:680px}
+.source-viewer img{display:block;max-width:100%;max-height:760px;margin:0 auto;border-radius:0;background:#fff}
+.doc-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.footer{padding:28px 0 50px;color:var(--muted);border-top:1px solid var(--line)}
+@media(max-width:980px){
+  .hero-grid,.split,.two,.diagram-grid,.tools-grid,.quiz-box,.source-layout,.paper-shell,.paper-hero,.topic-detail-grid{grid-template-columns:1fr}
+  .grid,.cheat-grid{grid-template-columns:1fr 1fr}
+  .side{position:relative;top:auto}
+  .section-head{grid-template-columns:1fr}
+  .toolbar{justify-content:flex-start}
+  .paper-tabs{border-right:0;border-bottom:2px solid var(--line)}
+}
+@media(max-width:640px){
+  .wrap{padding:0 14px}
+  .nav{align-items:flex-start;flex-direction:column;padding:12px 0}
+  .navlinks{margin-left:0}
+  .grid,.cheat-grid,.stats,.fields{grid-template-columns:1fr}
+  .hero h1{font-size:44px}
+  .source-viewer{min-height:auto}
+}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><span class="mark">C</span><span>COAL Prep Studio</span></a>
+    <nav class="navlinks">
+      <a href="#roadmap">Roadmap</a>
+      <a href="#learn">Learn</a>
+      <a href="#diagrams">Diagrams</a>
+      <a href="#tools">Tools</a>
+      <a href="#papers">Papers</a>
+      <a href="#quiz">Quiz</a>
+      <a href="#vault">Vault</a>
+      <a href="#cheat">Cheat</a>
+    </nav>
+  </div>
+</div>
+
+<main id="top">
+  <header class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow">CS322 Computer Organization and Assembly Language</div>
+        <h1>Exam-focused COAL revision.</h1>
+        <p class="lead">A calm preparation platform built from the scanned notes, lecture 5, lab decks, and past-paper photos. Use it to revise concepts, practice calculations, and connect every likely exam question to the source pages.</p>
+        <div class="doc-links">
+          <a class="btn primary" href="#learn">Start revision</a>
+          <a class="btn" href="#tools">Open calculators</a>
+          <a class="btn warn" href="#papers">Past-paper drill</a>
+        </div>
+      </div>
+      <aside class="panel">
+        <div class="eyebrow">Preparation dashboard</div>
+        <div class="stats">
+          <div class="stat"><b>85</b><span>scanned pages</span></div>
+          <div class="stat"><b>7</b><span>paper photos</span></div>
+          <div class="stat"><b>12</b><span>core missions</span></div>
+          <div class="stat"><b>56</b><span>quiz prompts</span></div>
+        </div>
+        <div class="hero-plate" aria-label="COAL technical system plate">
+          <svg viewBox="0 0 390 210" role="img">
+            <rect width="390" height="210" fill="#fffdf7"/>
+            <path d="M0 35H390M0 70H390M0 105H390M0 140H390M0 175H390M65 0V210M130 0V210M195 0V210M260 0V210M325 0V210" stroke="#e1e3da"/>
+            <rect x="24" y="28" width="92" height="44" fill="#eaf1ff" stroke="#171a20" stroke-width="2"/>
+            <text x="42" y="55" fill="#111318" font-size="17" font-family="Inter, Arial" font-weight="950">CS:IP</text>
+            <path d="M116 50H177" stroke="#2f6df6" stroke-width="3"/>
+            <rect x="178" y="28" width="92" height="44" fill="#ffffff" stroke="#171a20" stroke-width="2"/>
+            <text x="196" y="55" fill="#111318" font-size="17" font-family="Inter, Arial" font-weight="950">PA</text>
+            <path d="M270 50H342" stroke="#d2a900" stroke-width="3"/>
+            <rect x="250" y="104" width="112" height="58" fill="#fff3a8" stroke="#171a20" stroke-width="2"/>
+            <text x="270" y="137" fill="#111318" font-size="16" font-family="Inter, Arial" font-weight="950">GDT/LDT</text>
+            <rect x="36" y="114" width="60" height="42" fill="#eef7f6" stroke="#171a20" stroke-width="2"/>
+            <text x="49" y="140" fill="#111318" font-size="14" font-family="Inter, Arial" font-weight="950">CF</text>
+            <rect x="98" y="114" width="60" height="42" fill="#eef7f6" stroke="#171a20" stroke-width="2"/>
+            <text x="111" y="140" fill="#111318" font-size="14" font-family="Inter, Arial" font-weight="950">ZF</text>
+            <rect x="160" y="114" width="60" height="42" fill="#eef7f6" stroke="#171a20" stroke-width="2"/>
+            <text x="173" y="140" fill="#111318" font-size="14" font-family="Inter, Arial" font-weight="950">OF</text>
+            <text x="24" y="194" fill="#606975" font-size="11" font-family="Consolas, monospace">SEGMENT * 10h + OFFSET // FLAGS -> JUMPS // SELECTOR -> DESCRIPTOR</text>
+          </svg>
+          <div class="plate-label"><span>real mode</span><span>flags</span><span>protected mode</span></div>
+        </div>
+        <p style="margin:16px 0 0">High-yield focus: address generation, descriptor tables, flags, banks, jumps, stack, and assembly snippets.</p>
+      </aside>
+    </div>
+  </header>
+
+  <section class="section wrap" id="roadmap">
+    <div class="section-head">
+      <div><h2>Revision Roadmap</h2><p>Each mission is mapped to likely exam behavior: explain, calculate, draw, compare, or code.</p></div>
+      <div class="toolbar"><input class="search" id="topicSearch" placeholder="Search flags, descriptor, stack..."></div>
+    </div>
+    <div class="grid" id="topicCards"></div>
+  </section>
+
+  <section class="section wrap" id="learn">
+    <div class="section-head">
+      <div><h2>Teacher Mode</h2><p>Detailed topic notes with exam wording, model answers, traps, and where to look in the source vault.</p></div>
+      <div class="toolbar"><button class="btn primary" id="markDone">Mark done</button><button class="btn" id="resetDone">Reset progress</button></div>
+    </div>
+    <div class="split">
+      <aside class="side" id="lessonMenu"></aside>
+      <article class="lesson-body" id="lessonBody"></article>
+    </div>
+  </section>
+
+  <section class="section wrap" id="diagrams">
+    <div class="section-head"><div><h2>Mermaid-Style Diagram Lab</h2><p>Clean, light, exam-ready diagrams rendered offline from diagram definitions. Filter by topic and redraw the structure in your paper.</p></div></div>
+    <div class="diagram-tabs" id="diagramTabs"></div>
+    <div class="diagram-grid" id="diagramGrid"></div>
+  <section class="section wrap" id="tools">
+    <div class="section-head"><div><h2>Exam Calculators</h2><p>Practice the operations that past papers keep asking for.</p></div></div>
+    <div class="tools-grid">
+      <div class="tool"><h3>Physical address calculator</h3><div class="fields"><div class="field"><label>Segment hex</label><input class="input" id="seg" value="2F00"></div><div class="field"><label>Offset hex</label><input class="input" id="off" value="0FF0"></div></div><button class="btn primary" onclick="calcAddress()">Calculate</button><div class="output" id="addrOut"></div></div>
+      <div class="tool"><h3>FLAGS simulator</h3><div class="fields"><div class="field"><label>A hex byte</label><input class="input" id="fa" value="61"></div><div class="field"><label>B hex byte</label><input class="input" id="fb" value="2D"></div></div><div class="field"><label>Operation</label><select id="fop"><option>ADD</option><option>SUB</option><option>CMP</option></select></div><button class="btn primary" onclick="simFlags()">Run ALU</button><div class="output" id="flagOut"></div><div class="flag-grid" id="flagGrid"></div></div>
+      <div class="tool"><h3>Memory-bank visualizer</h3><div class="fields"><div class="field"><label>CPU model</label><select id="bankCpu"><option value="8086">8086: two byte banks</option><option value="8088">8088: one byte bank</option><option value="80386">80386DX: four byte banks</option></select></div><div class="field"><label>Address hex</label><input class="input" id="bankAddr" value="00005"></div></div><button class="btn primary" onclick="bankViz()">Select bank</button><div class="output" id="bankOut"></div><div class="banks" id="bankLanes"></div></div>
+      <div class="tool"><h3>Descriptor granularity calculator</h3><div class="fields"><div class="field"><label>Base hex</label><input class="input" id="descBase" value="000A0000"></div><div class="field"><label>Raw limit hex</label><input class="input" id="descLimit" value="FFFFF"></div></div><div class="fields"><div class="field"><label>Granularity</label><select id="descG"><option value="0">G=0 bytes</option><option value="1" selected>G=1 4KB pages</option></select></div><div class="field"><label>D/B bit</label><select id="descD"><option value="0">16-bit segment</option><option value="1" selected>32-bit segment</option></select></div></div><button class="btn primary" onclick="decodeDescriptor()">Decode</button><div class="output" id="descOut"></div></div>
+      <div class="tool"><h3>Endianness visualizer</h3><div class="field"><label>Hex value</label><input class="input" id="endianVal" value="11223344"></div><button class="btn primary" onclick="showEndian()">Store in memory</button><div class="output" id="endianOut"></div></div>
+      <div class="tool"><h3>Addressing-mode explainer</h3><div class="field"><label>Mode</label><select id="addrMode"><option value="regind">Register indirect: MOV AL,[BX]</option><option value="baseidx">Base plus index: MOV AX,[BX+SI]</option><option value="disp">Base index displacement: MOV AX,[BX+SI+10h]</option><option value="bp">Stack default: MOV AL,[BP]</option><option value="override">Segment override: MOV AL,ES:[BX]</option><option value="imm">Immediate: MOV AX,1234h</option></select></div><button class="btn primary" onclick="explainMode()">Explain</button><div class="output" id="modeOut"></div></div>
+      <div class="tool"><h3>Stack PUSH/POP simulator</h3><div class="fields"><div class="field"><label>SP hex</label><input class="input" id="spVal" value="1000"></div><div class="field"><label>Value hex</label><input class="input" id="stackVal" value="BEEF"></div></div><button class="btn primary" onclick="pushStack()">PUSH</button> <button class="btn" onclick="popStack()">POP</button><div class="output" id="stackOut"></div><div class="stack-box" id="stackBox"></div></div>
+      <div class="tool"><h3>Conditional jump tester</h3><div class="fields"><div class="field"><label>Condition</label><select id="jumpCond"><option>JE/JZ</option><option>JNE/JNZ</option><option>JC/JB</option><option>JNC/JAE</option><option>JA</option><option>JBE</option><option>JG</option><option>JGE</option><option>JL</option><option>JLE</option><option>LOOP</option></select></div><div class="field"><label>CF,ZF,SF,OF,CX</label><input class="input" id="jumpFlags" value="0,1,0,0,3"></div></div><button class="btn primary" onclick="testJump()">Test</button><div class="output" id="jumpOut"></div></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="papers">
+    <div class="section-head"><div><h2>Solved Exam Papers</h2><p>Each visible past paper is grouped with its own questions and direct model answers. Use this like a marking-scheme companion beside the scanned paper.</p></div></div>
+    <div class="paper-shell">
+      <div class="paper-tabs" id="paperTabs"></div>
+      <div class="paper-content" id="paperDrill"></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="quiz">
+    <div class="section-head"><div><h2>Quiz Sprint</h2><p>Fast MCQ and true/false revision. Questions now move through a shuffled deck, so next actually means next.</p></div><div class="toolbar"><button class="btn primary" id="nextQuestionBtn" onclick="newQuestion()">Next question</button><button class="btn" onclick="showAnswer()">Show answer</button><button class="btn" onclick="resetQuiz()">Reset score</button></div></div>
+    <div class="quiz-box">
+      <div class="card">
+        <div class="meta"><span class="tag ok" id="quizMeta">Question</span><span class="tag" id="quizScore">0/0</span><span class="tag hot" id="quizStreak">streak 0</span></div>
+        <div class="quiz-progress"><span id="quizProgress"></span></div>
+        <div class="question" id="question"></div>
+        <div class="answers" id="answers"></div>
+        <div class="quiz-actions"><button class="btn primary" onclick="newQuestion()">Next</button><button class="btn" onclick="showAnswer()">Reveal</button></div>
+        <div class="quiz-hint" id="quizHint">Pick an answer. The explanation will appear instantly.</div>
+        <div class="output" id="why" style="display:none;margin-top:10px"></div>
+      </div>
+      <aside class="card"><h3>How to use sprint mode</h3><ol class="list"><li>Answer before opening notes.</li><li>If wrong, open the linked mission.</li><li>Use the calculator for that topic.</li><li>The deck avoids repeats until you finish the round.</li></ol></aside>
+    </div>
+  </section>
+
+  <section class="section wrap" id="vault">
+    <div class="section-head">
+      <div><h2>Source Vault</h2><p>Browse original scanned pages and past-paper photos without leaving the platform.</p></div>
+      <div class="toolbar"><input class="search" id="sourceSearch" placeholder="Search page, paper, descriptor..."></div>
+    </div>
+    <div class="doc-links">
+      <a class="chip" href="COAL.pdf">Open COAL.pdf</a>
+      <a class="chip" href="Lect%2005.pdf">Open Lecture 05</a>
+      <a class="chip" href="COAL%20-%20Lab%201.pptx">Lab 1</a>
+      <a class="chip" href="COAL%20-%20Lab%202.pptx">Lab 2</a>
+      <a class="chip" href="COAL%20-%20LAB%203.pptx">Lab 3</a>
+      <a class="chip" href="COAL%20-%20LAB%204.pptx">Lab 4</a>
+    </div>
+    <div class="source-layout" style="margin-top:14px">
+      <div class="source-list" id="sourceList"></div>
+      <div class="source-viewer"><div class="meta"><span class="tag ok" id="sourceTitle">Source</span><span class="tag" id="sourceTopic"></span></div><img id="sourceImg" alt="Selected source page"></div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="cheat">
+    <div class="section-head"><div><h2>Last-Night Cheat Sheets</h2><p>Compact tables for the facts most likely to save marks under time pressure.</p></div></div>
+    <div class="cheat-grid" id="cheatSheets"></div>
+  </section>
+</main>
+
+<footer class="footer"><div class="wrap">Built for quick COAL revision from the local course files. Original PDFs, decks, and photos remain unchanged.</div></footer>
+
+<script>
+const diagramCategories = ['All','Memory','Protected Mode','Hardware','Control Flow','Assembly'];
+let activeDiagramCategory = 'All';
+const diagramDefs = [
+ {cat:'Memory', title:'Real-mode segment:offset address', caption:'Exam wording: physical address = segment * 10h + offset. Use CS:IP for instruction fetch and DS:BX/SI/DI for data examples.', hint:'Redraw as three boxes: segment shifted left, plus offset, equals 20-bit physical address.', code:'flowchart LR\\nSEG[Segment] --> BASE[Segment * 10h]\\nOFF[Offset] --> ADD[Add]\\nBASE --> ADD\\nADD --> PA[20-bit physical address]', nodes:[['SEG','Segment',50,70,'accent'],['BASE','Segment * 10h',245,70,'soft'],['OFF','Offset',245,190,'warn'],['ADD','Add',440,130,'soft'],['PA','20-bit PA',610,130,'accent']], edges:[['SEG','BASE','shift left 4'],['BASE','ADD','base'],['OFF','ADD','offset'],['ADD','PA','result']]},
+ {cat:'Hardware', title:'8086 and 80386 memory banks', caption:'Exam wording: data bus width decides byte lanes; address bus width decides maximum addressable memory.', hint:'Draw 8086 as two byte banks, 80386DX as four byte banks with byte-enable signals.', code:'flowchart LR\\nADDR[Address] --> DEC[Bank select]\\nDEC --> L[8086 low/even]\\nDEC --> H[8086 high/odd]\\nDEC --> B0[80386 BE0]\\nDEC --> B3[80386 BE3]', nodes:[['ADDR','Address lines',40,130,'accent'],['DEC','Bank select logic',220,130,'soft'],['L','8086 low/even D7-D0',430,50,'warn'],['H','8086 high/odd D15-D8',430,130,'warn'],['B0','80386 BE0-BE3',430,210,'accent'],['B3','Four byte lanes',615,210,'soft']], edges:[['ADDR','DEC','A0 / BE'],['DEC','L','A0=0'],['DEC','H','BHE=0'],['DEC','B0','32-bit bus'],['B0','B3','D31-D0']]},
+ {cat:'Hardware', title:'80386DX separate bus-enable write signals', caption:'Exam wording: BE0#-BE3# select byte lanes; write-control logic combines write status with the active byte-enable line to produce separate write strobes for each memory bank.', hint:'Draw four banks D7-D0 through D31-D24. Feed each BE# and WR# into a gate to make WE0# through WE3#.', code:'flowchart LR\\nA[Address + bus size] --> BE[BE0# BE1# BE2# BE3#]\\nCTRL[W/R# write cycle] --> GATE[Write enable logic]\\nBE --> GATE\\nGATE --> W0[WE0# bank 0 D7-D0]\\nGATE --> W1[WE1# bank 1 D15-D8]\\nGATE --> W2[WE2# bank 2 D23-D16]\\nGATE --> W3[WE3# bank 3 D31-D24]', nodes:[['A','Address +\\nbus size',40,70,'accent'],['BE','Byte enables\\nBE0#-BE3#',245,70,'warn'],['CTRL','Write cycle\\nW/R# = write',40,205,'soft'],['GATE','Separate write\\ncontrol gates',245,165,'accent'],['W0','WE0#\\nBank 0 D7-D0',490,25,'soft'],['W1','WE1#\\nBank 1 D15-D8',490,105,'soft'],['W2','WE2#\\nBank 2 D23-D16',490,185,'soft'],['W3','WE3#\\nBank 3 D31-D24',490,265,'soft'],['MEM','32-bit memory\\n4 byte lanes',690,145,'warn']], edges:[['A','BE','decode'],['BE','GATE','active lanes'],['CTRL','GATE','write request'],['GATE','W0','bank write'],['GATE','W1','bank write'],['GATE','W2','bank write'],['GATE','W3','bank write'],['W1','MEM','lanes'],['W2','MEM','lanes']]},
+ {cat:'Protected Mode', title:'Descriptor entry layout', caption:'Exam wording: descriptor stores base, limit, access rights, privilege, present bit, and granularity.', hint:'Redraw as fields, then write one line explaining base, limit, and rights.', code:'flowchart LR\\nD[Descriptor] --> BASE[Base address]\\nD --> LIMIT[Limit]\\nD --> ACCESS[Access byte]\\nD --> FLAGS[G / D-B flags]', nodes:[['D','8-byte descriptor',50,130,'accent'],['BASE','Base address',270,50,'soft'],['LIMIT','Segment limit',270,130,'warn'],['ACCESS','Access byte / DPL',270,210,'soft'],['FLAGS','G, D/B, AVL flags',520,130,'accent']], edges:[['D','BASE','where'],['D','LIMIT','size'],['D','ACCESS','rights'],['D','FLAGS','scaling']]},
+ {cat:'Protected Mode', title:'Selector to GDT/LDT lookup', caption:'Exam wording: selector does not directly hold the physical address; it points to a descriptor in GDT or LDT.', hint:'Draw selector fields: index, TI, RPL. Then branch TI=0 to GDT and TI=1 to LDT.', code:'flowchart LR\\nSEL[Selector: index TI RPL] --> TI{TI bit}\\nTI -->|0| GDT[GDT]\\nTI -->|1| LDT[LDT]\\nGDT --> DESC[Descriptor]\\nLDT --> DESC\\nDESC --> LIN[Base + offset]', nodes:[['SEL','Selector\\nindex | TI | RPL',40,130,'accent'],['TI','TI bit',240,130,'warn'],['GDT','GDT',420,70,'soft'],['LDT','LDT',420,190,'soft'],['DESC','Descriptor',575,130,'accent'],['LIN','Base + offset',700,130,'soft']], edges:[['SEL','TI','choose table'],['TI','GDT','TI=0'],['TI','LDT','TI=1'],['GDT','DESC','entry'],['LDT','DESC','entry'],['DESC','LIN','address']]},
+ {cat:'Control Flow', title:'FLAGS to conditional jumps', caption:'Exam wording: jumps read flags set by arithmetic, logic, or CMP. LOOP is the exception because it reads CX.', hint:'Draw flags in the center and group signed, unsigned, equality, and loop conditions around them.', code:'flowchart TB\\nCMP[CMP / SUB / ADD] --> FLAGS[FLAGS]\\nFLAGS --> EQ[JE/JZ: ZF=1]\\nFLAGS --> UNS[JA/JB: CF,ZF]\\nFLAGS --> SIGN[JG/JL: SF,OF,ZF]\\nCX[CX counter] --> LOOP[LOOP: CX != 0]', nodes:[['CMP','CMP / ADD / SUB',60,60,'accent'],['FLAGS','FLAGS register',280,60,'warn'],['EQ','JE/JZ\\nZF=1',520,25,'soft'],['UNS','Unsigned jumps\\nCF + ZF',520,115,'soft'],['SIGN','Signed jumps\\nSF + OF + ZF',520,205,'soft'],['CX','CX counter',80,235,'accent'],['LOOP','LOOP\\nCX after decrement != 0',280,235,'warn']], edges:[['CMP','FLAGS','sets'],['FLAGS','EQ','equality'],['FLAGS','UNS','unsigned'],['FLAGS','SIGN','signed'],['CX','LOOP','not flags']]},
+ {cat:'Control Flow', title:'Pipeline timing', caption:'Exam wording: pipelining improves throughput by overlapping instruction stages, not by making each individual stage disappear.', hint:'Redraw as rows of IF, ID, EX, WB shifted by one cycle.', code:'flowchart LR\\nI1[Instruction 1] --> IF1[IF] --> ID1[ID] --> EX1[EX] --> WB1[WB]\\nI2[Instruction 2] --> IF2[IF] --> ID2[ID] --> EX2[EX]', nodes:[['I1','I1',45,60,'accent'],['IF1','IF',150,60,'soft'],['ID1','ID',255,60,'soft'],['EX1','EX',360,60,'warn'],['WB1','WB',465,60,'accent'],['I2','I2',45,155,'accent'],['IF2','IF',255,155,'soft'],['ID2','ID',360,155,'soft'],['EX2','EX',465,155,'warn'],['NOTE','Stages overlap across cycles',260,255,'accent']], edges:[['I1','IF1',''],['IF1','ID1',''],['ID1','EX1',''],['EX1','WB1',''],['I2','IF2','cycle+1'],['IF2','ID2',''],['ID2','EX2','']]},
+ {cat:'Assembly', title:'Stack CALL and RET flow', caption:'Exam wording: CALL saves a return address; RET pops it. PUSH decreases SP first in 16-bit mode, POP increases SP after reading.', hint:'Draw stack growing downward with return IP at the top after CALL.', code:'flowchart LR\\nCALL[CALL proc] --> PUSH[Push return IP]\\nPUSH --> PROC[Procedure body]\\nPROC --> RET[RET]\\nRET --> POP[Pop return IP]\\nPOP --> NEXT[Resume after CALL]', nodes:[['CALL','CALL proc',40,120,'accent'],['PUSH','Push return IP\\nSP = SP - 2',210,120,'warn'],['PROC','Procedure body',405,120,'soft'],['RET','RET',570,120,'accent'],['POP','Pop return IP\\nSP = SP + 2',210,245,'warn'],['NEXT','Resume after CALL',405,245,'soft']], edges:[['CALL','PUSH','save'],['PUSH','PROC','jump'],['PROC','RET','return'],['RET','POP','load IP'],['POP','NEXT','continue']]},
+ {cat:'Assembly', title:'Little-endian storage', caption:'Exam wording: x86 stores the least significant byte at the lowest memory address.', hint:'Write the value left-to-right, then draw memory addresses low-to-high with bytes reversed.', code:'flowchart LR\\nVAL[12345678h] --> SPLIT[Bytes: 12 34 56 78]\\nSPLIT --> MEM[Memory low to high: 78 56 34 12]', nodes:[['VAL','Value\\n12345678h',55,125,'accent'],['SPLIT','Split into bytes\\n12 34 56 78',270,125,'soft'],['MEM','Memory order\\n78 56 34 12',540,125,'warn'],['LOW','lowest address',540,230,'accent'],['HIGH','highest address',700,230,'soft']], edges:[['VAL','SPLIT','parse'],['SPLIT','MEM','store'],['LOW','HIGH','address increases']]},
+ {cat:'Assembly', title:'Addressing-mode effective address', caption:'Exam wording: name the mode, compute effective offset, and mention the default segment.', hint:'For BP/SP say SS. For BX/SI/DI say DS unless a segment override appears.', code:'flowchart LR\\nBASE[Base BX/BP] --> EA[Effective address]\\nINDEX[Index SI/DI] --> EA\\nDISP[Displacement] --> EA\\nEA --> SEG[Default segment]\\nSEG --> MEM[Memory operand]', nodes:[['BASE','Base\\nBX or BP',40,55,'accent'],['INDEX','Index\\nSI or DI',40,145,'soft'],['DISP','Displacement\\n+10h',40,235,'warn'],['EA','Effective offset',285,145,'accent'],['SEG','Default segment\\nDS or SS',505,145,'soft'],['MEM','Memory operand\\n[base+index+disp]',675,145,'warn']], edges:[['BASE','EA','+'],['INDEX','EA','+'],['DISP','EA','+'],['EA','SEG','select'],['SEG','MEM','address']]},
+ {cat:'Assembly', title:'MASM assemble-link-run cycle', caption:'Exam wording: source ASM is assembled to OBJ, linked to EXE, then executed. Listing/map files are optional outputs.', hint:'Redraw as a simple pipeline: edit, assemble, link, run.', code:'flowchart LR\\nASM[.ASM source] --> MASM[MASM assembler]\\nMASM --> OBJ[.OBJ object]\\nOBJ --> LINK[LINK]\\nLINK --> EXE[.EXE]\\nEXE --> RUN[Run in DOSBox]', nodes:[['ASM','.ASM source',45,130,'accent'],['MASM','MASM assembler',205,130,'soft'],['OBJ','.OBJ object',385,130,'warn'],['LINK','LINK',530,130,'soft'],['EXE','.EXE file',650,80,'accent'],['RUN','Run in DOSBox',650,190,'warn']], edges:[['ASM','MASM','assemble'],['MASM','OBJ','machine object'],['OBJ','LINK','link'],['LINK','EXE','create'],['EXE','RUN','execute']]}
+];
+
+const topics = [
+ {id:'cpu', title:'x86 and CPU Basics', level:'Foundation', pages:'1, 4-9, 36-39', tag:'explain', source:'COAL pages 1, 4-9, 36-39; Lab 1', summary:'x86 keeps backward compatibility while adding wider registers, buses, cache, FPU support, and pipelining. The CPU fetches instructions, decodes operands, executes, and writes results or flags.', must:['Clock rate is cycles per second; MIPS depends on completed instructions and workload.','Data bus width controls data moved per transfer; address bus width controls addressable memory.','Cache is small fast SRAM used to reduce slow DRAM access.'], exam:['Differentiate address bus, data bus, and control bus.','Explain opcode and operand with an assembly example.','Why does pipelining improve throughput?'], traps:['Do not say clock rate alone equals performance.','Do not confuse cache capacity with main memory size.']},
+ {id:'numbers', title:'Number Systems and Storage Units', level:'Foundation', pages:'10, 13-15, Lab 2', tag:'calculate', source:'COAL pages 10, 13-15; Lab 2', summary:'COAL questions often mix binary, decimal, hexadecimal, nibble, byte, word, signed ranges, and decimal-vs-binary capacity.', must:['1 hex digit = 4 bits; 2 hex digits = 1 byte.','Byte=8 bits, word=16 bits, dword=32 bits, qword=64 bits.','Two\'s complement stores negative signed integers.'], exam:['Convert decimal to hex and binary.','Find storage needed for a hex number like 2A6h.','Explain signed and unsigned range differences.'], traps:['A decimal GB uses powers of 10, memory addressing uses powers of 2.','MSB is the sign bit only when interpreting as signed.']},
+ {id:'registers', title:'Registers and Programming Model', level:'Core', pages:'5-7, 26', tag:'compare', source:'COAL pages 5-7, 26', summary:'Registers are fast CPU storage. General-purpose registers hold data and addresses; special-purpose registers control execution, segments, flags, descriptors, and task state.', must:['AX splits into AH and AL; EAX contains AX; RAX contains EAX.','AX accumulator, BX base, CX count, DX data/extension.','CS, DS, ES, SS, FS, GS are segment registers; IP/EIP/RIP points to next instruction.'], exam:['Differentiate general-purpose and special-purpose registers.','How can lower 8/16-bit FLAGS status be obtained in AL/AX?','Draw AX as AH plus AL.'], traps:['BP and SP default to stack segment behavior.','FLAGS are not ordinary data registers.']},
+ {id:'flags', title:'FLAGS Register', level:'Core', pages:'10, 13-15', tag:'calculate', source:'COAL pages 10, 13-15; past papers', summary:'Arithmetic and comparison instructions update FLAGS. Conditional jumps read those flags, so flags connect arithmetic to control flow.', must:['CF means unsigned carry or borrow.','OF means signed overflow.','ZF=1 when result is zero; SF follows the sign bit; PF means even parity of low byte.'], exam:['Differentiate Carry and Parity flags.','Differentiate Carry and Overflow flags with examples.','Which flags are used for signed vs unsigned jumps?'], traps:['CF and OF are not the same.','CMP changes flags but does not store the subtraction result.']},
+ {id:'real', title:'Real-Mode Addressing', level:'Memory', pages:'11-13', tag:'calculate', source:'COAL pages 11-13; past papers', summary:'Real mode forms a 20-bit physical address by shifting the segment left 4 bits and adding the 16-bit offset.', must:['Physical address = segment * 10h + offset.','A real-mode segment covers 64KB.','Segments begin on paragraph boundaries of 16 bytes and can overlap.'], exam:['Generate physical address for CS:IP and DS:BX.','How is a segment modified to address 1MB DRAM?','Explain paragraph boundary and segment overlap.'], traps:['Do not multiply by 100h; the shift is 4 bits, so multiply by 10h.','Offset is not ignored.']},
+ {id:'protected', title:'Protected Mode and Descriptors', level:'Memory', pages:'16-27', tag:'draw', source:'COAL pages 16-27; past papers', summary:'Protected mode uses selectors and descriptor tables. A segment register holds a selector that points into GDT or LDT; the descriptor stores base, limit, access rights, privilege, and granularity.', must:['G=0 means byte granularity; G=1 scales the limit in 4KB pages.','TI chooses GDT or LDT; RPL is in selector; DPL is in descriptor.','Descriptor tables are accessed by registers such as GDTR, LDTR, IDTR, and TR.'], exam:['Draw the structure of a descriptor entry.','How can LDT/GDT be accessed in protected mode?','What is the role of the granularity bit?'], traps:['The selector is not the base address.','FFFFFh with G=1 gives a 4GB-sized range, not 1MB.']},
+ {id:'banks', title:'Memory Banks and Bus Signals', level:'Hardware', pages:'2-4, 28-35', tag:'draw', source:'COAL pages 2-4, 28-35; past papers', summary:'Byte lanes let wider processors access multiple bytes at once. 8086 uses low/even and high/odd banks; 80386DX/80486-style diagrams often show four byte banks.', must:['8088 has an 8-bit data bus and one byte bank.','8086 has a 16-bit data bus and two banks selected by A0 and BHE.','80386DX uses a 32-bit data bus, commonly shown as four byte banks.'], exam:['How many memory banks are supported by 80286/80386DX and maximum memory size?','Draw generation of bus-enable control signals in 80386DX.','Are address lines and data lines the same number for interfacing?'], traps:['BHE enables the high byte, not the least significant byte.','Address bus size and data bus size answer different questions.']},
+ {id:'syntax', title:'Assembly Syntax and Data Definitions', level:'Assembly', pages:'40-42, Lab 3, Lab 4, Lect 05', tag:'code', source:'COAL pages 40-42; Lab 3-4; Lecture 05', summary:'Assembly statements have optional name, operation, operands, and comments. Directives guide the assembler, while instructions translate to machine code.', must:['In two-operand instructions, destination comes first and source second.','DB defines bytes, DW defines words, DUP repeats values.','EQU creates named constants.'], exam:['Define an array of 20 16-bit elements initialized to 100h.','Complete assembler directives for variables and strings.','Difference between instruction and assembler directive.'], traps:['PROC is a directive, not a CPU opcode.','A string for DOS function 09h must end with $.']},
+ {id:'addressing', title:'Addressing Modes', level:'Assembly', pages:'43-54', tag:'compare', source:'COAL pages 43-54; past papers', summary:'Addressing modes describe where operands come from: immediate value, register, direct memory, register indirect, base-index, displacement, and segment override.', must:['Immediate: value is inside instruction.','Register indirect: register holds offset, such as [BX].','BP-based addresses default to SS; BX/SI/DI usually default to DS.'], exam:['Differentiate register indirect and base-plus-index addressing modes.','Identify addressing modes in MOV instructions.','Explain segment override with example.'], traps:['LEA loads an address, not the value stored at that address.','[BP] defaults to SS, not DS.']},
+ {id:'data', title:'Data Movement, Stack, and Endian', level:'Assembly', pages:'55-60', tag:'code', source:'COAL pages 55-60; past papers', summary:'MOV, XCHG, LEA, PUSH, POP, LAHF, SAHF, and endian storage are frequent short-answer targets.', must:['x86 stores multi-byte values in little-endian order.','PUSH decreases SP before storing in 16-bit mode.','POP reads from stack then increases SP.'], exam:['Explain how data is stored using little-endian format.','Differentiate LAHF and SAHF.','Differentiate PUSH and POP.'], traps:['MOV cannot copy memory directly to memory in normal 8086 forms.','PUSH/POP size must match operand size.']},
+ {id:'control', title:'Arithmetic, CMP, Jumps, and LOOP', level:'Control', pages:'61-80', tag:'calculate', source:'COAL pages 61-80; past papers', summary:'Arithmetic and logic instructions update flags. CMP prepares flags for conditional jumps. LOOP decrements CX and jumps if CX is not zero.', must:['Unsigned comparisons use CF and ZF.','Signed comparisons use SF, OF, and ZF.','JE and JZ are the same condition: ZF=1.'], exam:['Are all conditional jumps controlled by flags? Explain carefully.','Differentiate JMP and CALL with example.','Trace assembly snippets and fill register values.'], traps:['JMP does not save a return address; CALL does.','LOOP uses CX in 16-bit mode.']},
+ {id:'procedures', title:'Procedures and DOSBox Lab Flow', level:'Lab', pages:'81-85, Lab 4, Lect 05', tag:'code', source:'COAL pages 81-85; Lab 4; Lecture 05', summary:'Procedures organize code with CALL and RET. Lab 4 adds the practical MASM/DOSBox flow and the DOS int 21h services used in the first program.', must:['CALL pushes the return address.','RET pops the return address and resumes after CALL.','MASM creates OBJ; LINK creates EXE.'], exam:['Differentiate JMP and CALL.','Write a program to print a string and a character.','Explain assembling, linking, and running.'], traps:['Function 09h prints a $-terminated string; function 02h prints one character in DL.','The command to run the executable is the exe name, not link filename.exe.']}
+];
+
+const detailByTopic = {
+ cpu:{formula:['addressable memory = 2^address-lines','one bus cycle transfers up to data-bus width'], strategy:'In explain questions, separate function from size: address bus selects a location, data bus carries data, control bus says read/write/interrupt/acknowledge.', papers:'Lab 1, COAL pages 8-9, Terminal true/false bus lines.'},
+ numbers:{formula:['1 hex digit = 4 bits','n address bits = 2^n byte locations','two\'s complement negative = invert + 1'], strategy:'Show one conversion step, group binary into nibbles for hex, and state whether the number is signed or unsigned before discussing range.', papers:'Lab 2 conversions, storage-unit questions.'},
+ registers:{formula:['AX = AH:AL','EAX contains AX; RAX contains EAX'], strategy:'For compare questions, make two columns: purpose, examples, and whether the programmer directly uses it in ordinary arithmetic.', papers:'Fall 2025 Q2, Terminal 2024 FLAGS-in-AL/AX question.'},
+ flags:{formula:['CF = unsigned carry/borrow','OF = signed overflow','ZF = result is zero','PF = even parity in low byte'], strategy:'Always say which instruction set the flags, then which later instruction reads them. For comparisons, mention CMP changes flags but stores no result.', papers:'Fall 2025 Q2, Spring 2025 Q1, Terminal 2024 Q3.'},
+ real:{formula:['physical address = segment * 10h + offset','segment base = segment << 4','real-mode range = 00000h to FFFFFh'], strategy:'Write the formula first, substitute values, align hex digits, then mask to 20 bits if the sum crosses FFFFFh.', papers:'Fall 2025 Q1/Q4, Spring 2025 Q4.'},
+ protected:{formula:['selector = index + TI + RPL','effective limit with G=1 = (limit << 12) + FFFh','data access allowed when max(CPL,RPL) <= DPL'], strategy:'Draw the lookup path: selector -> GDT/LDT -> descriptor -> base+offset. Then discuss privilege separately.', papers:'Fall 2025 Q1/Q4, Spring 2025 Q1/Q2.'},
+ banks:{formula:['8086: A0 selects low/even, BHE selects high/odd','80286: 24-bit address bus -> 16MB','80386DX: 32-bit address bus -> 4GB'], strategy:'Answer bank questions with both bus width and address width. Data bus tells lanes; address bus tells maximum memory.', papers:'Spring 2025 Q1/Q2/Q3, Fall 2025 Q1.'},
+ syntax:{formula:['array DW 20 DUP(100h)','string DB "text $"','constant EQU value'], strategy:'For code questions, check operand sizes, illegal memory-to-memory moves, segment-register restrictions, and DOS string terminator.', papers:'Terminal 2024 lab section, Lab 3-4.'},
+ addressing:{formula:['effective address = base + index + displacement','BP/SP default segment = SS','BX/SI/DI default segment = DS'], strategy:'Name the addressing mode, show the effective offset, then name the default segment. This gets marks even if the numeric value is not asked.', papers:'Terminal 2024 Q2, COAL pages 43-54.'},
+ data:{formula:['little-endian 12345678h -> 78 56 34 12','PUSH: SP=SP-2 then store','POP: load then SP=SP+2'], strategy:'Use byte order diagrams for endian answers and stack arrows for PUSH/POP. Mention LAHF uses AH, not AL.', papers:'Terminal 2024 Q1/Q5, COAL pages 55-60.'},
+ control:{formula:['JE/JZ: ZF=1','JA: CF=0 and ZF=0','JG: ZF=0 and SF=OF','LOOP: CX=CX-1; jump if CX != 0'], strategy:'Never memorize jump names alone. Translate each jump into the flag condition, then decide true/false from the current flags.', papers:'Terminal 2024 Q3, COAL pages 67-80.'},
+ procedures:{formula:['CALL pushes return address','RET pops return address','INT 21h AH=09h prints $-terminated string'], strategy:'For lab programs, initialize DS, load DX with string offset, set AH service number, call INT 21h, then terminate with AH=4Ch.', papers:'Terminal 2024 lab program, Lab 4, COAL pages 81-85.'}
+};
+
+const topicNotes = {
+ cpu:{summary:['x86 is a backward-compatible processor family: newer CPUs keep older programming ideas such as AX, segments, FLAGS, and instruction mnemonics.','A CPU executes instructions through fetch, decode, execute, and write-back/status update stages.','Performance depends on clock rate, instruction complexity, cache, wait states, bus width, and pipelining, not clock alone.'], important:['Address bus width decides maximum memory locations.','Data bus width decides how much data can move in one transfer.','Control bus carries signals such as read, write, interrupt, acknowledge, and bus status.','SRAM is fast and used for cache; DRAM is denser and used for main memory.']},
+ numbers:{summary:['Computer organization questions use decimal, binary, and hexadecimal interchangeably.','Hex is compact because every hex digit maps to exactly four binary bits.','Signed values require an interpretation rule; two complement is the standard signed representation.'], important:['Nibble = 4 bits; byte = 8 bits; word = 16 bits; dword = 32 bits; qword = 64 bits.','Unsigned 8-bit range is 0 to 255; signed 8-bit range is -128 to +127.','Memory capacity uses powers of 2, while clock/storage marketing often uses powers of 10.','Overflow means the represented result does not fit in the selected number size.']},
+ registers:{summary:['Registers are the fastest storage locations visible to assembly programs.','General-purpose registers are used for arithmetic, data movement, addressing, counting, and stack operations.','Special registers control execution, segmentation, flags, descriptor tables, and task/interrupt behavior.'], important:['AX splits into AH and AL; AX is inside EAX; EAX is inside RAX.','BX is commonly a base register; CX is the loop/count register; DX extends AX in multiply/divide and I/O.','SP points to stack top; BP is used to access stack data and defaults to SS.','CS:IP identifies the next instruction in real mode.']},
+ flags:{summary:['FLAGS records the status left behind by arithmetic, logic, compare, and some control instructions.','Conditional jumps do not calculate again; they inspect flag bits already set by previous instructions.','CMP is a subtraction for flags only, so it is central to comparisons.'], important:['CF is for unsigned carry/borrow.','OF is for signed overflow.','ZF is set when result is zero.','SF copies the result sign bit.','PF is set when the low byte has even parity.','DF controls string operation direction.']},
+ real:{summary:['Real mode uses 16-bit segment registers and 16-bit offsets to generate a 20-bit physical address.','The segment value is shifted left four bits, creating a paragraph-aligned base.','The offset is added to that base to select the final byte.'], important:['Formula: physical address = segment * 10h + offset.','A segment window is 64KB because the offset is 16-bit.','A paragraph is 16 bytes.','Different segment:offset pairs can point to the same physical address.','Instruction fetch normally uses CS:IP.']},
+ protected:{summary:['Protected mode replaces raw segment bases with selectors and descriptor tables.','A selector points to a descriptor in the GDT or LDT; the descriptor contains base, limit, and rights.','Protection checks use privilege information before memory access is allowed.'], important:['Selector fields: index, TI, RPL.','TI=0 selects GDT; TI=1 selects LDT.','Descriptor fields include base, limit, access byte, present bit, DPL, type, G, and D/B.','G=0 means byte granularity; G=1 means 4KB page granularity.','Hidden descriptor cache avoids rereading the table on every memory access.']},
+ banks:{summary:['Memory banks are byte lanes used by wider data buses to transfer multiple bytes at once.','8086 has a 16-bit data bus split into low/even and high/odd banks.','80386DX-style diagrams use four 8-bit lanes for a 32-bit data bus.'], important:['8086 low/even bank carries D7-D0 and is selected using A0.','8086 high/odd bank carries D15-D8 and is selected using BHE.','Odd-address word transfers may require extra cycles.','80286 has a 24-bit address bus, so maximum physical memory is 16MB.','80386DX has a 32-bit address bus, so maximum physical memory is 4GB.']},
+ syntax:{summary:['Assembly statements are made from an optional name/label, operation field, operands, and comments.','Instructions become machine code; assembler directives organize code/data but are not CPU instructions.','Data definitions reserve and initialize memory for bytes, words, arrays, strings, and constants.'], important:['Destination operand comes first in Intel syntax.','DB defines bytes; DW defines words.','DUP repeats initial values.','EQU defines symbolic constants.','A DOS AH=09h string must end with $.','PROC/ENDP define procedures for the assembler.']},
+ addressing:{summary:['Addressing modes describe where an operand comes from and how an effective address is formed.','Memory operands often combine base, index, and displacement components.','Default segment matters because the same offset can refer to a different segment.'], important:['Immediate operand is inside the instruction.','Register mode uses CPU registers only.','Direct mode uses an offset written in the instruction.','Register indirect uses a register such as BX as the offset.','Base-index displacement uses base + index + displacement.','BP/SP based addresses default to SS; BX/SI/DI default to DS.']},
+ data:{summary:['Data movement instructions copy values between registers, memory, stack, and address registers.','x86 stores multi-byte values in little-endian byte order.','Stack operations are central to procedure calls, local storage, and saving registers.'], important:['MOV copies data but does not usually allow memory-to-memory transfer directly.','LEA loads an effective address, not the memory value.','PUSH decreases SP before storing a word in 16-bit mode.','POP reads the top word and then increases SP.','LAHF loads low FLAGS into AH; SAHF stores AH into low FLAGS.']},
+ control:{summary:['Control-flow instructions change the next instruction address.','Unconditional JMP always transfers control; conditional jumps depend on flags.','LOOP is special because it decrements CX and checks CX, not FLAGS.'], important:['JE/JZ checks ZF=1.','JNE/JNZ checks ZF=0.','JA uses CF=0 and ZF=0 for unsigned greater.','JG uses ZF=0 and SF=OF for signed greater.','CALL pushes a return address; JMP does not.','RET pops the saved return address.']},
+ procedures:{summary:['Procedures organize repeated code and allow structured assembly programs.','CALL transfers control to a procedure and saves the return address on the stack.','RET restores execution by popping that return address.'], important:['Initialize DS before using data labels in small-model DOS programs.','INT 21h AH=09h prints a $-terminated string at DS:DX.','INT 21h AH=02h prints the character in DL.','INT 21h AH=4Ch terminates the program.','MASM creates OBJ; LINK creates EXE; then run the EXE in DOSBox.']}
+};
+
+const paperSets = [
+ {id:'terminal24a', title:'Terminal Exam 13 Jun 2024 - Theory Page 1', meta:'CS322, Part I theory, visible paper photo 1/2', img:'assets/past-papers/paper_02.jpg', questions:[
+  {marks:'Q1-a / 4', q:'What are two methods to obtain the status of lower 8/16-bit FLAGS into AL/AX register?', a:['Use LAHF to load the low status flags into AH, then move AH to AL if AL is specifically required.','Use PUSHF followed by POP AX to copy the 16-bit FLAGS register into AX. For 32-bit contexts the equivalent idea is PUSHFD/POP EAX.','Do not say MOV AX,FLAGS; FLAGS is not copied like an ordinary general-purpose register.']},
+  {marks:'Q1-b / 2', q:'What is the role of the granularity bit in the descriptor of a segment?', a:['The G bit decides the unit used by the descriptor limit.','G=0 means the limit is counted in bytes. G=1 means the limit is counted in 4KB pages, so effective limit = (limit << 12) + FFFh.','This is why a 20-bit limit can describe a very large protected-mode segment.']},
+  {marks:'Q1-c / 3', q:'Give an example to explain how data is stored using little-endian format.', a:['x86 stores the least significant byte at the lowest memory address.','Example: 12345678h is stored as 78h, 56h, 34h, 12h from low to high memory.','The value is not reversed logically; only its byte order in memory is least-significant first.']},
+  {marks:'Q1-d / 2', q:'How is an array of 20 elements of 16-bit defined and initialized with value 100h?', a:['Use word storage because each element is 16-bit.','MASM form: array DW 20 DUP(100h).','DB would be wrong because DB creates bytes, not words.']},
+  {marks:'Q2 / 12', q:'Differentiate GDTR and LDTR, register indirect and base-plus-index, JMP and CALL.', a:['GDTR holds the base and limit of the Global Descriptor Table; LDTR identifies the active Local Descriptor Table for the current task/process context.','Register indirect uses one register as an offset, such as MOV AL,[BX]. Base-plus-index combines a base and index register, such as MOV AX,[BX+SI].','JMP only transfers control. CALL pushes the return address first, transfers control to a procedure, and RET uses that saved address to return.']},
+  {marks:'Q3 / 10', q:'True/False set: OR gates for bank write signals, NMI vs INTR, conditional jumps, 2D arrays, INT instruction.', a:['OR gates can be used in bank-control logic, but write-enable generation depends on the bus interface design and active-low control signals; explain the specific diagram if shown.','NMI and INTR are not the same: NMI is non-maskable and INTR is maskable/acknowledged.','Most conditional jumps rely on FLAGS, but LOOP relies on CX rather than FLAGS, so the word "all" is unsafe.','A two-dimensional array is usually accessed by calculating an effective address using base/index/displacement, not just a vague "register indirect" answer.','INT calls a software interrupt service; in DOS labs it is commonly used for I/O through INT 21h.']}
+ ]},
+ {id:'terminal24b', title:'Terminal Exam 13 Jun 2024 - Lab Page 2', meta:'Instruction correction, LAHF/SAHF, stack, program writing', img:'assets/past-papers/paper_07.jpg', questions:[
+  {marks:'Q5 / 9', q:'Differentiate LAHF and SAHF, SUB and CMP, PUSH and POP.', a:['LAHF loads selected low FLAGS bits into AH; SAHF stores AH back into selected FLAGS bits.','SUB subtracts and stores the result in the destination; CMP subtracts only to set FLAGS and discards the result.','PUSH decreases SP and stores data on the stack; POP reads the top value and then increases SP.']},
+  {marks:'Q6 / 4', q:'Correct invalid instructions such as MOV ES,1005 and MOV ES,DS.', a:['You cannot load an immediate value directly into a segment register. Correct pattern: MOV AX,1005h then MOV ES,AX.','You cannot copy segment register to segment register directly. Correct pattern: MOV AX,DS then MOV ES,AX.','When operands have size mismatch or illegal memory/segment usage, use a general-purpose register as the legal intermediate.']},
+  {marks:'Q7 / 9', q:'Calculate an arithmetic expression by writing assembly code.', a:['Translate the expression step by step using registers: load the first operand, perform subtraction/addition, multiply if required, and store the final result.','Preserve registers if the problem is inside a procedure. Use CBW/CWD only when signed extension is required.','A clean answer shows comments after each instruction, because marks usually come from sequence and operand-size correctness.']},
+  {marks:'Q8 / 8', q:'Write an assembly program to read/search a string and display if a character is found.', a:['Read the string into memory, load SI with the string offset, load AL with the search character, and use CX as the string length counter.','Loop: compare AL with [SI], jump to FOUND if equal, increment SI, LOOP back.','FOUND prints the character/message with INT 21h. NOT_FOUND prints "CHARACTER NOT FOUND". Terminate with MOV AH,4Ch and INT 21h.']}
+ ]},
+ {id:'fall25', title:'Mid Term F25 - Fall 2025 Full Paper', meta:'04 Nov 2025, short questions, differences, true/false, fill blanks', img:'assets/past-papers/paper_03.jpg', questions:[
+  {marks:'Q1-A / 4', q:'How are physical addresses generated in real-mode memory addressing to fetch the instruction?', a:['Use CS:IP for instruction fetch.','Formula: physical address = CS * 10h + IP. The segment is shifted left 4 bits, then the offset is added.','Example: if CS=0410h and IP=002Ch, PA = 04100h + 002Ch = 0412Ch.']},
+  {marks:'Q1-B / 4', q:'Draw the memory map of banks for 80386DX microprocessor.', a:['80386DX has a 32-bit data bus, so draw four 8-bit byte banks.','Label them D7-D0, D15-D8, D23-D16, and D31-D24, commonly selected by byte-enable signals BE0-BE3.','Mention that the 32-bit address bus can address up to 4GB memory.']},
+  {marks:'Q1-C / 4', q:'How can we reach the Local Descriptor Table in protected-mode memory addressing?', a:['A segment selector contains index, TI, and RPL.','When TI=1, the selector refers to the LDT. The LDTR register gives the processor the current LDT descriptor/table information.','The selector index locates the descriptor entry; then base + offset gives the linear address after protection checks.']},
+  {marks:'Q1-D / 4', q:'Provide the structure of a descriptor entry.', a:['Draw an 8-byte descriptor with segment limit, base address, access byte, flags, and upper base fields.','Access byte includes present bit, DPL, descriptor type/category, and segment type. Flags include granularity G and D/B.','Explain: base says where segment starts, limit says how large it can be, rights say what access is allowed.']},
+  {marks:'Q2 / 8', q:'Differentiate Carry and Parity FLAGS; general-purpose and special-purpose registers.', a:['Carry Flag records unsigned carry/borrow out of the most significant bit; Parity Flag records whether the low byte has even parity.','General-purpose registers include AX, BX, CX, DX, SI, DI, BP, SP for data, addressing, counting, and stack use.','Special-purpose registers include IP, FLAGS, segment registers, GDTR/LDTR/IDTR/TR because they control execution, status, segmentation, and protection.']},
+  {marks:'Q3 / 8', q:'True/False: stack default BP, address/data lines same, descriptor table max length, G=1 multiplied by 10h.', a:['Default offset/base register used with stack segment is BP: True in common 8086 addressing; BP-based memory references default to SS.','Address lines and data lines must be same in number: False. Address width controls memory range; data width controls transfer size.','Maximum descriptor-table length as 1MB/FFFFFh: False for GDT/LDT table limit; descriptor table limit is 16-bit, up to 64KB.','If G=1, segment size is computed by multiplying by 10h: False. G=1 uses 4KB pages, not 16-byte paragraphs.']},
+  {marks:'Q4 / 8', q:'Fill blanks: protected segment size, data/stack bit, RPL-DPL relation, physical address from base/segment.', a:['Protected-mode segment can be up to 4GB when limit is FFFFFh and G=1.','Data/stack behavior is encoded in the descriptor access/type bits; the B bit in D/B is meaningful for stack-size behavior.','For data access, effective privilege must satisfy max(CPL,RPL) <= DPL. In simplified exam wording: RPL should be less than or equal to DPL.','If segment starts at 0CBh and offset/base register is 0621h in real-mode style, PA = 0CB0h + 0621h = 12D1h.']}
+ ]},
+ {id:'spring25', title:'Mid Term Spring 2025 - Page 1', meta:'18 Apr 2025, banks, descriptors, true/false, physical addresses', img:'assets/past-papers/paper_06.jpg', questions:[
+  {marks:'Q1-A / 3', q:'How many memory banks are supported by 80286 and what is the maximum size of memory supported?', a:['80286 has a 16-bit data bus, so it is commonly shown with two 8-bit memory banks: low/even and high/odd.','It has a 24-bit address bus, so maximum physical memory is 2^24 bytes = 16MB.']},
+  {marks:'Q1-B / 3', q:'What is the difference between carry and overflow flag?', a:['Carry Flag is for unsigned arithmetic: it indicates carry out or borrow.','Overflow Flag is for signed arithmetic: it indicates the signed result is outside representable range.','Example: 7Fh + 01h gives 80h; CF=0 but OF=1 for signed 8-bit arithmetic.']},
+  {marks:'Q1-C / 4', q:'How can we reduce memory accesses to reach a segment through GDT?', a:['After loading a segment selector, the processor caches descriptor information in the hidden descriptor cache portion of the segment register.','Later accesses use the cached base, limit, and rights instead of rereading the GDT every time.','This is why segment-register loads are more expensive than ordinary memory accesses, but repeated use is faster.']},
+  {marks:'Q1-D / 3', q:'How is segment size computed when granularity is set?', a:['When G=1, the raw limit is counted in 4KB units.','Effective limit = (limit << 12) + FFFh. Segment size in bytes is effective limit + 1.']},
+  {marks:'Q1-E / 3', q:'How is a segment modified to address 1MB DRAM in real-mode addressing?', a:['Real mode uses a 20-bit address made from segment * 10h + offset.','Changing the segment register moves the 64KB window by 16-byte paragraph steps.','The largest real-mode physical address space is 1MB, from 00000h to FFFFFh.']},
+  {marks:'Q2 / 8', q:'Draw descriptor structure and bus enable control signals in 80386DX.', a:['Descriptor: draw base, limit, access byte, G/D/B flags, and upper base. Explain each field.','80386DX bus enable: draw four byte lanes and BE0-BE3 selecting D7-D0, D15-D8, D23-D16, D31-D24.','Mention ADS indicates a valid bus-cycle address; byte enables decide which bytes are active.']},
+  {marks:'Q3 / 12', q:'True/False set: BHE, ADS, descriptor table length, BP stack default, lines same, INTA.', a:['BHE enables least significant 8 data bits: False. BHE enables the high byte on 8086.','ADS becomes active only when address exceeds 20 bits: False. ADS indicates a valid address/bus cycle.','Descriptor table maximum length is 1MB/FFFFFh: False for descriptor table limit; GDT/LDT table limit is up to 64KB.','Default offset register with stack segment is BP: True for BP-based memory addressing.','Address lines and data lines should be same in number: False. They have different jobs.','When INTA is active, it indicates the processor is acknowledging an interrupt: True.']},
+  {marks:'Q4 / 4', q:'Generate physical addresses: CS=2F00h IP=0FF0h and DS=3DAAh BX=0CD1h.', a:['Instruction PA = CS * 10h + IP = 2F00h * 10h + 0FF0h = 2F000h + 0FF0h = 2FFF0h.','Data PA = DS * 10h + BX = 3DAAh * 10h + 0CD1h = 3DAA0h + 0CD1h = 3E771h.']}
+ ]},
+ {id:'revisionCopies', title:'Duplicate / Alternate Photos', meta:'Repeated Instagram screenshots kept for source traceability', img:'assets/past-papers/paper_01.jpg', questions:[
+  {marks:'Traceability', q:'Why are some paper photos repeated?', a:['Several WhatsApp/Instagram screenshots are duplicate or alternate angles of the same terminal/midterm papers.','The site keeps them in the Source Vault so you can compare visibility, but the solved answers are consolidated in the paper tabs above.','Use the Vault search with "paper", "descriptor", "flags", or "real mode" to jump back to the original photo.']},
+  {marks:'Revision method', q:'How should these copies be used?', a:['First solve from the photo without notes.','Then open the matching solved-paper tab and compare your answer against the model wording.','Finally revise the topic mission and calculator if the mistake was formula-based.']}
+ ]}
+];
+
+const quiz = [
+ ['Physical address formula in real mode is:', ['segment + offset','segment * 10h + offset','segment * 100h + offset','base - limit'], 1, 'Real mode shifts the segment left 4 bits, equal to multiplying by 10h.'],
+ ['CS=2F00h and IP=0FF0h gives:', ['2FFF0h','2F0F0h','3EFF0h','02FF0h'], 0, '2F00h * 10h = 2F000h; plus 0FF0h = 2FFF0h.'],
+ ['Which flag is for unsigned carry or borrow?', ['OF','CF','SF','DF'], 1, 'CF tracks unsigned carry/borrow.'],
+ ['Which flag is for signed overflow?', ['OF','PF','IF','ZF'], 0, 'OF indicates signed overflow.'],
+ ['JZ jumps when:', ['CF=1','ZF=1','OF=1','SF=0'], 1, 'JZ means jump if zero, so it checks ZF=1.'],
+ ['JE and JZ are:', ['same condition','opposites','only for unsigned','only for loops'], 0, 'Both test ZF=1.'],
+ ['LOOP in 16-bit mode uses:', ['AX','BX','CX','DX'], 2, 'LOOP decrements CX and jumps if CX is not zero.'],
+ ['LEA loads:', ['memory value','effective address','FLAGS','stack top'], 1, 'LEA means load effective address.'],
+ ['BP-based addressing defaults to:', ['CS','DS','ES','SS'], 3, 'BP and SP based addressing use the stack segment by default.'],
+ ['8086 has:', ['one 8-bit bank','two 8-bit banks','four 8-bit banks','no banks'], 1, '8086 has a 16-bit data bus split into low/even and high/odd byte banks.'],
+ ['BHE on 8086 enables:', ['low byte','high byte','address bus','interrupts'], 1, 'BHE means Bus High Enable.'],
+ ['A 20-bit address bus can address:', ['64KB','1MB','4GB','16GB'], 1, '2^20 bytes = 1,048,576 bytes = 1MB.'],
+ ['A hex digit represents:', ['2 bits','4 bits','8 bits','16 bits'], 1, 'One hex digit maps exactly to four binary bits.'],
+ ['A word is:', ['4 bits','8 bits','16 bits','32 bits'], 2, 'In this course context, word commonly means 16 bits.'],
+ ['x86 stores dword 12345678h in memory as:', ['12 34 56 78','78 56 34 12','34 12 78 56','56 78 12 34'], 1, 'x86 is little-endian: least significant byte first.'],
+ ['Descriptor G=1 means limit is scaled by:', ['bytes','16 bytes','4KB pages','1MB pages'], 2, 'Granularity bit set means 4KB page granularity.'],
+ ['TI=0 in a selector selects:', ['LDT','GDT','IDT','stack'], 1, 'TI=0 selects the GDT; TI=1 selects the LDT.'],
+ ['DPL is stored in:', ['selector','descriptor','offset','opcode'], 1, 'Descriptor privilege level is part of the descriptor access rights.'],
+ ['RPL is stored in:', ['selector','cache line','instruction queue','data bus'], 0, 'Requested privilege level is the low bits of the selector.'],
+ ['CALL stores what?', ['return address','only FLAGS','only AX','descriptor limit'], 0, 'CALL must save a return address so RET can come back.'],
+ ['RET does what?', ['clears registers','pops return address','sets CF','loads GDT'], 1, 'RET pops return IP/address and resumes execution.'],
+ ['PUSH in 16-bit mode generally:', ['increases SP then stores','decreases SP then stores','does not change SP','sets ZF'], 1, 'The x86 stack grows downward.'],
+ ['POP generally:', ['loads then increases SP','loads then decreases SP','only clears flags','only jumps'], 0, 'POP reads the top item, then advances SP upward.'],
+ ['CMP does:', ['subtracts and stores','subtracts for flags only','always jumps','copies data'], 1, 'CMP updates flags as if subtracting but does not store result.'],
+ ['Unsigned comparisons mainly use:', ['CF and ZF','SF and OF','IF only','DF only'], 0, 'Unsigned above/below logic depends on carry and zero.'],
+ ['Signed comparisons mainly use:', ['SF, OF, and ZF','only CF','only DF','only IF'], 0, 'Signed less/greater checks sign and overflow relation.'],
+ ['LAHF loads:', ['AH from low FLAGS','FLAGS from AH','AL from memory','GDT from memory'], 0, 'LAHF loads status flags into AH.'],
+ ['SAHF stores:', ['AH into low FLAGS','FLAGS into AH','SP into SS','IP into CS'], 0, 'SAHF stores AH into selected low FLAGS bits.'],
+ ['DB defines:', ['word data','byte data','procedure','segment selector'], 1, 'DB means define byte.'],
+ ['DW defines:', ['byte data','word data','interrupt','descriptor'], 1, 'DW means define word.'],
+ ['20 words initialized to 100h can be written:', ['array DB 20 DUP(100h)','array DW 20 DUP(100h)','array EQU 20','array PROC 100h'], 1, 'Word-sized array uses DW with DUP.'],
+ ['Function int 21h AH=09h prints:', ['one character in DL','$-terminated string','binary integer','descriptor'], 1, 'DOS service 09h prints a string ending in $.'],
+ ['Function int 21h AH=02h prints:', ['one character in DL','a string in DX','memory map','FLAGS'], 0, 'DOS service 02h displays the character in DL.'],
+ ['MASM produces:', ['OBJ file','only EXE','PDF','PPT'], 0, 'The assembler translates source into an object file.'],
+ ['LINK produces:', ['ASM file','OBJ only','EXE file','listing only'], 2, 'The linker creates an executable from object code.'],
+ ['Opcode means:', ['operation code','operand address','stack pointer','cache size'], 0, 'Opcode tells the CPU what operation to perform.'],
+ ['Operand means:', ['the data/location an instruction acts on','clock rate','descriptor register','interrupt pin'], 0, 'Operands are sources, destinations, values, or addresses.'],
+ ['Assembler directive:', ['always CPU instruction','guides assembler','must set FLAGS','is a memory bank'], 1, 'Directives tell the assembler how to organize data/code.'],
+ ['PROC is:', ['pseudo-op/directive','hardware interrupt','data bus','flag'], 0, 'PROC defines a procedure for the assembler.'],
+ ['SRAM is commonly used for:', ['cache','hard disk','paper storage','GDT only'], 0, 'SRAM is fast and suitable for cache.'],
+ ['DRAM is commonly used for:', ['main memory','registers only','flags only','assembler directives'], 0, 'DRAM is dense and used for main memory.'],
+ ['A wait state is:', ['extra delay cycle','jump label','register name','endian format'], 0, 'Wait states let slower memory/devices catch up.'],
+ ['Pipeline improves mainly:', ['throughput','hex digit size','segment limit bits','stack direction'], 0, 'Pipelining overlaps instruction stages.'],
+ ['A paragraph boundary is every:', ['4 bytes','8 bytes','16 bytes','64 bytes'], 2, 'Real-mode paragraphs are 16 bytes.'],
+ ['Segment overlap means:', ['two segment:offset pairs can map to same physical address','segments cannot share memory','only protected mode exists','offset is always zero'], 0, 'Different segment and offset combinations may produce the same physical address.'],
+ ['MOV memory to memory directly is generally:', ['allowed in normal 8086 MOV','not allowed in normal 8086 MOV','required by MASM','same as CALL'], 1, 'Use a register as an intermediate for memory-to-memory copies.'],
+ ['JMP differs from CALL because JMP:', ['saves return address','does not save return address','always changes FLAGS','uses only CX'], 1, 'JMP transfers control without return bookkeeping.'],
+ ['The Direction Flag affects:', ['string operation direction','memory size','clock speed','descriptor base'], 0, 'DF controls auto-increment/decrement direction for string instructions.'],
+ ['PF is set for:', ['odd parity','even parity of low byte','signed overflow','interrupt enable'], 1, 'Parity flag is 1 when the low byte has even parity.'],
+ ['ZF is set when:', ['result is zero','carry occurs','interrupt accepted','address is odd'], 0, 'Zero flag records a zero result.'],
+ ['SF follows:', ['least significant bit','most significant bit','BHE pin','TI bit'], 1, 'Sign flag copies the result MSB.'],
+ ['8088 data bus width is:', ['8-bit','16-bit','32-bit','64-bit'], 0, '8088 has an 8-bit external data bus.'],
+ ['80386DX data bus is commonly:', ['8-bit','16-bit','32-bit','4-bit'], 2, '80386DX is commonly taught with 32-bit data bus and four byte banks.'],
+ ['A selector contains:', ['index, TI, RPL','only physical address','only offset','only opcode'], 0, 'The selector identifies descriptor index, table indicator, and requested privilege level.'],
+ ['Descriptor limit controls:', ['segment size/range','opcode spelling','PPT slide count','register name'], 0, 'Limit bounds the segment addressable range.'],
+ ['Present bit indicates:', ['segment is available in memory','parity is even','stack is empty','jump is taken'], 0, 'P bit marks whether the descriptor/segment is present.']
+];
+
+const cheatSheets = [
+ ['Registers', [['AX','Accumulator; arithmetic and I/O conventions'],['BX','Base register for addressing'],['CX','Counter for LOOP/shifts'],['DX','Data extension and I/O'],['SI/DI','Source/destination index'],['BP/SP','Stack frame/top'],['CS/DS/ES/SS','Segment registers'],['IP','Next instruction offset']]],
+ ['FLAGS', [['CF','Unsigned carry/borrow'],['PF','Even parity of low byte'],['AF','Carry between nibbles'],['ZF','Result is zero'],['SF','MSB/sign bit is 1'],['OF','Signed overflow'],['IF','Interrupt enable'],['DF','String direction']]],
+ ['Addressing Modes', [['Immediate','MOV AX,1234h'],['Register','MOV AX,BX'],['Direct','MOV AL,[1234h]'],['Register indirect','MOV AL,[BX]'],['Base-index','MOV AX,[BX+SI]'],['Displacement','MOV AX,[BX+SI+10h]'],['BP default','SS segment'],['Override','MOV AL,ES:[BX]']]],
+ ['Instructions', [['Data','MOV, XCHG, LEA'],['Stack','PUSH, POP, PUSHF, POPF'],['Arithmetic','ADD, ADC, SUB, SBB, CMP'],['Logic','AND, OR, XOR, NOT, TEST'],['Jumps','JMP, JE, JNE, JA, JB, JG, JL, LOOP'],['Procedure','PROC, CALL, RET, ENDP'],['DOS','INT 21h services'],['Flags','LAHF, SAHF']]],
+ ['Protected Mode', [['Selector','index + TI + RPL'],['Descriptor','base + limit + rights'],['GDT','global descriptor table'],['LDT','local descriptor table'],['IDT','interrupt descriptor table'],['GDTR/LDTR','table registers'],['G=0','limit in bytes'],['G=1','limit in 4KB pages']]],
+ ['Exam Formulas', [['Real mode','PA = segment * 10h + offset'],['G=1 limit','effective = (limit << 12) + FFFh'],['20-bit address','2^20 = 1MB'],['32-bit address','2^32 = 4GB'],['Little endian','least significant byte first'],['PUSH','SP = SP - 2, store word'],['POP','load word, SP = SP + 2'],['LOOP','CX = CX - 1; jump if CX != 0']]],
+ ['Bus and Memory Signals', [['8086 A0','Selects low/even byte bank D7-D0'],['8086 BHE#','Enables high/odd byte bank D15-D8'],['80386DX BE0#','Byte enable for bank 0, D7-D0'],['80386DX BE1#','Byte enable for bank 1, D15-D8'],['80386DX BE2#','Byte enable for bank 2, D23-D16'],['80386DX BE3#','Byte enable for bank 3, D31-D24'],['ADS#','Address status: valid bus-cycle address'],['W/R#','Indicates read/write bus cycle direction']]],
+ ['80386DX Write Control', [['Separate bank write','WE0#-WE3# are produced per byte lane'],['Logic idea','Write request + active BE# selects only required memory bank'],['Word/dword writes','Multiple BE# lines can be active at once'],['Byte write','Only one BE# line is active'],['Misaligned access','Can require multiple bus cycles'],['Memory size','32 address lines gives 4GB address space'],['Data width','32-bit data bus means four byte lanes'],['Exam diagram','Draw BE0#-BE3# feeding four write-control gates']]],
+ ['Conditional Jumps', [['JE/JZ','Jump if ZF=1'],['JNE/JNZ','Jump if ZF=0'],['JC/JB','Jump if CF=1'],['JNC/JAE','Jump if CF=0'],['JA','Unsigned above: CF=0 and ZF=0'],['JBE','Unsigned below/equal: CF=1 or ZF=1'],['JG','Signed greater: ZF=0 and SF=OF'],['JL','Signed less: SF != OF']]],
+ ['DOS INT 21h Services', [['AH=09h','Print $-terminated string at DS:DX'],['AH=02h','Print character in DL'],['AH=01h','Read character into AL with echo'],['AH=08h','Read character without echo'],['AH=0Ah','Buffered keyboard input'],['AH=4Ch','Terminate program'],['Before string output','Load DS and LEA/MOV DX,string offset'],['Common trap','09h needs $ terminator']]],
+ ['Data Definitions', [['DB','Define byte or string bytes'],['DW','Define 16-bit word'],['DD','Define 32-bit doubleword'],['DUP','Repeat initializer: 20 DUP(100h)'],['?','Reserve uninitialized storage'],['EQU','Symbolic constant'],['String for DOS 09h','DB "Hello $"'],['20 words of 100h','array DW 20 DUP(100h)']]],
+ ['Common Instruction Fixes', [['MOV ES,1005h','Invalid. Use MOV AX,1005h then MOV ES,AX'],['MOV ES,DS','Invalid. Use MOV AX,DS then MOV ES,AX'],['MOV mem,mem','Invalid normal form. Use register temporary'],['LEA DX,str','Loads offset address of str'],['MOV DX,str','Loads word stored at str, not address'],['CMP A,B','Sets flags only; result not stored'],['SUB A,B','Stores A-B in destination'],['CALL vs JMP','CALL saves return address; JMP does not']]]
+];
+
+const pageTopics = [
+ [1,1,'x86 evolution processor history'],[2,4,'memory banks buses address lines'],[5,7,'registers programming model'],[8,9,'cpu memory io opcode operand'],[10,10,'flags binary units'],[11,13,'real mode physical addressing'],[14,15,'number systems complement overflow'],[16,27,'protected mode descriptors gdt ldt idt'],[28,35,'8086 pins memory interface bank control signals'],[36,39,'performance cache pipeline wait states'],[40,42,'data definitions endian storage'],[43,54,'addressing modes'],[55,60,'data movement stack lahf sahf'],[61,66,'arithmetic logic cmp flags'],[67,80,'control flow jumps loops'],[81,85,'procedures parameter passing call ret']
+];
+const sources = [];
+for(let i=1;i<=85;i++){
+  const found = pageTopics.find(r=>i>=r[0] && i<=r[1]);
+  sources.push({type:'COAL page', title:`COAL page ${i}`, topic:found?found[2]:'COAL notes', img:`assets/pages/page_${String(i).padStart(3,'0')}.jpg`});
+}
+['Terminal 2024 theory page 1','Terminal 2024 lab page 2','Midterm F25 full paper','Midterm F25 theory page 1','Spring 2025 midterm page 1','Terminal duplicate page 1','Terminal duplicate page 2'].forEach((title,i)=>{
+  sources.push({type:'Past paper', title, topic:'past paper descriptor flags real mode banks addressing stack code', img:`assets/past-papers/paper_${String(i+1).padStart(2,'0')}.jpg`});
+});
+
+let activeLesson = 0;
+let activePaper = 0;
+let completed = new Set(JSON.parse(localStorage.getItem('coal-completed')||'[]'));
+let stack = [];
+let currentQ = null;
+let quizOrder = [];
+let quizPointer = -1;
+let answeredCurrent = false;
+let score = {correct:0,total:0,streak:0};
+const $ = id => document.getElementById(id);
+const hex = (n,w=0)=> (Number(n)>>>0).toString(16).toUpperCase().padStart(w,'0')+'h';
+const parseHex = v => parseInt(String(v).replace(/[^0-9a-f]/ig,''),16) || 0;
+const parity8 = n => ((n&255).toString(2).replace(/0/g,'').length % 2) === 0;
+
+function renderMermaidSvg(def){
+  const nodeMap = Object.fromEntries(def.nodes.map(n => [n[0], {id:n[0], label:n[1], x:n[2], y:n[3], kind:n[4]||''}]));
+  const boxW = 148, boxH = 58;
+  const width = Math.max(820, Math.max(...def.nodes.map(n => n[2])) + boxW + 46);
+  const height = Math.max(330, Math.max(...def.nodes.map(n => n[3])) + boxH + 46);
+  const gridH = Array.from({length: Math.floor(height/55)+1}, (_,i)=>`M0 ${i*55}H${width}`).join('');
+  const gridV = Array.from({length: Math.floor(width/82)+1}, (_,i)=>`M${i*82} 0V${height}`).join('');
+  const nodeSvg = def.nodes.map(([id,label,x,y,kind]) => {
+    const lines = String(label).split('\\n');
+    const text = lines.map((line,i)=>`<text x="${x+boxW/2}" y="${y+24+(i*16)}" text-anchor="middle">${line}</text>`).join('');
+    return `<g class="mermaid-node ${kind||''}"><rect x="${x}" y="${y}" width="${boxW}" height="${boxH}" rx="0"></rect>${text}</g>`;
+  }).join('');
+  const edgeSvg = def.edges.map(([from,to,label]) => {
+    const a=nodeMap[from], b=nodeMap[to];
+    const x1=a.x+boxW, y1=a.y+boxH/2, x2=b.x, y2=b.y+boxH/2;
+    const mid=(x1+x2)/2;
+    const path = `M${x1},${y1} C${mid},${y1} ${mid},${y2} ${x2},${y2}`;
+    const labelSvg = label ? `<text class="mermaid-label" x="${mid}" y="${((y1+y2)/2)-8}" text-anchor="middle">${label}</text>` : '';
+    return `<path class="mermaid-edge" d="${path}" marker-end="url(#arrow-mermaid)"></path>${labelSvg}`;
+  }).join('');
+  return `<svg class="mermaid-svg" viewBox="0 0 ${width} ${height}" role="img" aria-label="${def.title}">
+    <defs><marker id="arrow-mermaid" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#3a4654"></path></marker></defs>
+    <rect width="${width}" height="${height}" fill="#fffdf7"></rect>
+    <path d="${gridH}${gridV}" stroke="#e1e3da" stroke-width="1"></path>
+    ${edgeSvg}${nodeSvg}
+  </svg>`;
+}
+function renderDiagrams(category='All'){
+  activeDiagramCategory = category;
+  $('diagramTabs').innerHTML = diagramCategories.map(cat=>`<button class="diagram-tab ${cat===activeDiagramCategory?'active':''}" onclick="renderDiagrams('${cat}')">${cat}</button>`).join('');
+  const visible = diagramDefs.filter(d => category === 'All' || d.cat === category);
+  $('diagramGrid').innerHTML = visible.map(def=>`
+    <figure class="diagram">
+      <h3>${def.title}</h3>
+      <div class="mermaid-render">${renderMermaidSvg(def)}</div>
+      <figcaption><b>${def.cat}.</b> ${def.caption}<br><span class="tag hot" style="margin-top:8px">${def.hint}</span></figcaption>
+      <details class="diagram-source"><summary>Mermaid-style source</summary><pre>${def.code}</pre></details>
+    </figure>`).join('');
+}
+
+function renderTopicCards(filter=''){
+  const f=filter.toLowerCase();
+  $('topicCards').innerHTML = topics.filter(t=>!f || (t.title+' '+t.summary+' '+t.exam.join(' ')).toLowerCase().includes(f)).map((t,i)=>`
+    <article class="card">
+      <div class="meta"><span class="tag ok">${t.level}</span><span class="tag hot">${t.tag}</span><span class="tag">pages ${t.pages}</span></div>
+      <h3>${t.title}</h3><p>${t.summary}</p>
+      <div class="doc-links"><a class="chip" href="#learn" onclick="selectLesson(${i})">Open notes</a><a class="chip" href="#vault" onclick="openSourceFor('${t.id}')">Source pages</a></div>
+    </article>`).join('');
+}
+function renderMenu(){
+  $('lessonMenu').innerHTML = topics.map((t,i)=>`<button class="lesson-btn ${i===activeLesson?'active':''}" onclick="selectLesson(${i})">${completed.has(t.id)?'Done - ':''}${t.title}<br><small>${t.tag} | ${t.level}</small></button>`).join('');
+}
+function renderLesson(){
+  const t=topics[activeLesson];
+  const d=detailByTopic[t.id] || {formula:[], strategy:'Revise definition, diagram, formula, and one solved example.', papers:'Mapped to source pages and past-paper practice.'};
+  const n=topicNotes[t.id] || {summary:[t.summary], important:t.must};
+  $('lessonBody').innerHTML = `
+    <div class="lesson-title"><h3>${t.title}</h3><div class="meta"><span class="tag ok">${t.level}</span><span class="tag hot">${t.tag}</span><span class="tag">${t.source}</span></div></div>
+    <p>${t.summary}</p>
+    <div class="formula-strip">${d.formula.map(x=>`<span>${x}</span>`).join('')}</div>
+    <div class="note" style="margin-top:14px"><h4>Main topic summary</h4><ul class="list">${n.summary.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="note" style="margin-top:14px"><h4>Important information</h4><ul class="list">${n.important.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div class="two">
+      <div class="note"><h4>Must know</h4><ul class="list">${t.must.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+      <div class="note"><h4>Common traps</h4><ul class="list">${t.traps.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    </div>
+    <div class="topic-detail-grid">
+      <div class="note"><h4>How to write it in the exam</h4><p>${d.strategy}</p></div>
+      <div class="note"><h4>Where it appears</h4><p>${d.papers}</p></div>
+    </div>
+    <div class="note" style="margin-top:14px"><h4>Likely exam prompts</h4><div class="exam-list">${t.exam.map(x=>`<div class="exam-item"><b>${x}</b><small>Use the summary bullets above, include the formula or diagram if relevant, and write one concrete 8086/80386 example.</small></div>`).join('')}</div></div>
+  `;
+  renderMenu();
+}
+function selectLesson(i){activeLesson=i;renderLesson();location.hash='learn'}
+$('markDone').onclick=()=>{completed.add(topics[activeLesson].id);localStorage.setItem('coal-completed',JSON.stringify([...completed]));renderMenu();renderTopicCards($('topicSearch').value)};
+$('resetDone').onclick=()=>{completed.clear();localStorage.removeItem('coal-completed');renderMenu();renderTopicCards($('topicSearch').value)};
+$('topicSearch').addEventListener('input',e=>renderTopicCards(e.target.value));
+
+function calcAddress(){const seg=parseHex($('seg').value), off=parseHex($('off').value); const base=seg*16, pa=(base+off)&0xFFFFF; $('addrOut').textContent=`${hex(seg,4)} * 10h = ${hex(base,5)}\n${hex(base,5)} + ${hex(off,4)} = ${hex(base+off,5)}\n20-bit physical address = ${hex(pa,5)}`;}
+function setFlagGrid(flags){$('flagGrid').innerHTML=Object.entries(flags).map(([k,v])=>`<div class="flag ${v?'on':''}">${k}<br>${v}</div>`).join('');}
+function simFlags(){const a=parseHex($('fa').value)&255,b=parseHex($('fb').value)&255,op=$('fop').value;let raw,res,cf,of,af;if(op==='ADD'){raw=a+b;res=raw&255;cf=raw>255;of=((~(a^b)&(a^res))&0x80)!==0;af=((a&15)+(b&15))>15;}else{raw=a-b;res=raw&255;cf=a<b;of=(((a^b)&(a^res))&0x80)!==0;af=(a&15)<(b&15);}const flags={CF:+cf,PF:+parity8(res),AF:+af,ZF:+(res===0),SF:+!!(res&128),OF:+of};$('flagOut').textContent=`${op} ${hex(a,2)}, ${hex(b,2)} -> result ${hex(res,2)} (${res})\nCMP note: result is discarded, flags remain useful.`;setFlagGrid(flags);}
+function bankViz(){const cpu=$('bankCpu').value, addr=parseHex($('bankAddr').value);let lanes=[],msg='';if(cpu==='8088'){lanes=['Bank 0 D7-D0'];msg=`8088 has one 8-bit bank. Address ${hex(addr,5)} selects the only lane.`}if(cpu==='8086'){lanes=['Low/even D7-D0','High/odd D15-D8'];msg=`8086 address ${hex(addr,5)} is ${(addr&1)?'odd -> high bank':'even -> low bank'}. A word at an odd address can require two bus cycles.`}if(cpu==='80386'){lanes=['BE0 D7-D0','BE1 D15-D8','BE2 D23-D16','BE3 D31-D24'];msg=`80386DX 32-bit lane view: address ${hex(addr,8)} maps to byte lane ${addr&3}.`} $('bankOut').textContent=msg; $('bankLanes').innerHTML=lanes.map((x,i)=>`<div class="bank ${cpu==='8088'||i===(addr&(cpu==='8086'?1:3))?'active':''}">${x}</div>`).join('');}
+function decodeDescriptor(){const base=parseHex($('descBase').value),limit=parseHex($('descLimit').value);const G=$('descG').value==='1',D=$('descD').value==='1';const eff=G?((limit<<12)|0xFFF):limit; $('descOut').textContent=`Base: ${hex(base,8)}\nRaw limit: ${hex(limit,5)}\nGranularity: ${G?'4KB pages':'bytes'}\nEffective limit: ${hex(eff,8)} (${eff+1} bytes)\nSegment end approx: ${hex(base+eff,8)}\nDefault size: ${D?'32-bit':'16-bit'}`;}
+function showEndian(){let v=$('endianVal').value.replace(/[^0-9a-f]/ig,'').toUpperCase(); if(v.length%2)v='0'+v; const bytes=v.match(/../g)||[]; $('endianOut').textContent=`Written value: ${bytes.join(' ')}\nx86 memory order: ${bytes.slice().reverse().join(' ')}\nRule: least significant byte at lowest address.`;}
+function explainMode(){const m={regind:['Register indirect','Register contains offset. Example MOV AL,[BX] uses DS:BX by default.'],baseidx:['Base plus index','Effective offset is base + index. Example [BX+SI].'],disp:['Base index displacement','Effective offset is base + index + constant displacement.'],bp:['Stack default','BP/SP based addressing defaults to SS, useful for stack frames.'],override:['Segment override','Prefix changes default segment, e.g. ES:[BX].'],imm:['Immediate','Constant is encoded inside instruction; no memory operand read.']}; const v=m[$('addrMode').value]; $('modeOut').textContent=`${v[0]}\n${v[1]}`;}
+function renderStack(){$('stackBox').innerHTML=stack.slice().reverse().map((v,i)=>`<div class="stack-cell">${i===0?'TOP ':''}${v}</div>`).join('') || '<div class="stack-cell">empty</div>'}
+function pushStack(){let sp=parseHex($('spVal').value);const val=hex(parseHex($('stackVal').value)&0xFFFF,4);sp=(sp-2)&0xFFFF;stack.push(val);$('spVal').value=sp.toString(16).toUpperCase().padStart(4,'0');$('stackOut').textContent=`PUSH ${val}\nSP decreases by 2 -> ${hex(sp,4)}`;renderStack();}
+function popStack(){let sp=parseHex($('spVal').value);if(!stack.length){$('stackOut').textContent='Stack empty. Nothing to POP.';return}const val=stack.pop();sp=(sp+2)&0xFFFF;$('spVal').value=sp.toString(16).toUpperCase().padStart(4,'0');$('stackOut').textContent=`POP reads ${val}\nSP increases by 2 -> ${hex(sp,4)}`;renderStack();}
+function testJump(){const [CF,ZF,SF,OF,CX]=$('jumpFlags').value.split(',').map(x=>parseInt(x.trim())||0);const c=$('jumpCond').value;let take=false,rule='';switch(c){case 'JE/JZ':take=ZF===1;rule='ZF=1';break;case 'JNE/JNZ':take=ZF===0;rule='ZF=0';break;case 'JC/JB':take=CF===1;rule='CF=1';break;case 'JNC/JAE':take=CF===0;rule='CF=0';break;case 'JA':take=CF===0&&ZF===0;rule='CF=0 and ZF=0';break;case 'JBE':take=CF===1||ZF===1;rule='CF=1 or ZF=1';break;case 'JG':take=ZF===0&&SF===OF;rule='ZF=0 and SF=OF';break;case 'JGE':take=SF===OF;rule='SF=OF';break;case 'JL':take=SF!==OF;rule='SF != OF';break;case 'JLE':take=ZF===1||SF!==OF;rule='ZF=1 or SF != OF';break;case 'LOOP':take=(CX-1)!==0;rule='decrement CX, jump if CX != 0';break;}$('jumpOut').textContent=`${c}: ${rule}\nInput CF=${CF}, ZF=${ZF}, SF=${SF}, OF=${OF}, CX=${CX}\nDecision: ${take?'jump taken':'no jump'}`;}
+
+function renderPaperDrill(){
+  $('paperTabs').innerHTML = paperSets.map((p,i)=>`<button class="paper-tab ${i===activePaper?'active':''}" onclick="selectPaper(${i})">${p.title}<small>${p.meta}</small></button>`).join('');
+  const p = paperSets[activePaper];
+  $('paperDrill').innerHTML = `
+    <div class="paper-hero">
+      <div>
+        <div class="meta"><span class="tag ok">solved paper</span><span class="tag hot">${p.questions.length} answer blocks</span></div>
+        <h3>${p.title}</h3>
+        <p>${p.meta}. The answers are written in exam style: short enough to memorize, detailed enough to collect marks.</p>
+        <div class="doc-links"><a class="chip" href="#vault" onclick="openSource('${p.img}')">Open source photo</a><a class="chip" href="#tools">Use calculators</a></div>
+      </div>
+      <img src="${p.img}" alt="${p.title}">
+    </div>
+    <div class="qa-grid">
+      ${p.questions.map(item=>`
+        <article class="qa-card">
+          <span class="marks">${item.marks}</span>
+          <h4>${item.q}</h4>
+          <div class="answer-block">${item.a.map(x=>`<p><b>Answer:</b> ${x}</p>`).join('')}</div>
+        </article>`).join('')}
+    </div>`;
+}
+function selectPaper(i){ activePaper=i; renderPaperDrill(); }
+function shuffleQuiz(){
+  quizOrder = quiz.map((_,i)=>i);
+  for(let i=quizOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[quizOrder[i],quizOrder[j]]=[quizOrder[j],quizOrder[i]];}
+  quizPointer = -1;
+}
+function renderQuiz(){
+  if(!quizOrder.length) shuffleQuiz();
+  if(!currentQ) newQuestion();
+  const roundPosition = Math.max(quizPointer + 1, 1);
+  $('quizMeta').textContent=`Card ${roundPosition} of ${quiz.length}`;
+  $('quizScore').textContent=`${score.correct}/${score.total} correct`;
+  $('quizStreak').textContent=`streak ${score.streak}`;
+  $('quizProgress').style.width = `${Math.round((roundPosition / quiz.length) * 100)}%`;
+  $('question').textContent=currentQ[0];
+  $('answers').innerHTML=currentQ[1].map((a,i)=>`<button class="answer" onclick="answer(${i},this)">${a}</button>`).join('');
+  $('why').style.display='none';
+  $('quizHint').textContent='Pick an answer. The explanation will appear instantly.';
+}
+function answer(i,el){
+  if(answeredCurrent) return;
+  answeredCurrent = true;
+  const buttons=[...document.querySelectorAll('.answer')];
+  buttons.forEach(b=>b.disabled=true);
+  const ok=i===currentQ[2];
+  score.total++;
+  if(ok){score.correct++;score.streak++;} else {score.streak=0;}
+  buttons[currentQ[2]].classList.add('correct');
+  if(!ok)el.classList.add('wrong');
+  $('quizScore').textContent=`${score.correct}/${score.total} correct`;
+  $('quizStreak').textContent=`streak ${score.streak}`;
+  $('why').style.display='block';
+  $('why').textContent=(ok?'Correct. ':'Not quite. ')+currentQ[3];
+  $('quizHint').textContent='Use Next for a fresh card, or revise the related mission if this one felt slow.';
+}
+function showAnswer(){
+  if(!currentQ || answeredCurrent) return;
+  answeredCurrent = true;
+  const buttons=[...document.querySelectorAll('.answer')];
+  buttons.forEach(b=>b.disabled=true);
+  buttons[currentQ[2]].classList.add('correct');
+  $('why').style.display='block';
+  $('why').textContent='Revealed answer. '+currentQ[3];
+  $('quizHint').textContent='Reveal does not change your score. Press Next when ready.';
+}
+function newQuestion(){
+  if(!quizOrder.length || quizPointer >= quizOrder.length - 1) shuffleQuiz();
+  quizPointer++;
+  currentQ = quiz[quizOrder[quizPointer]];
+  answeredCurrent = false;
+  renderQuiz();
+}
+function resetQuiz(){score={correct:0,total:0,streak:0};shuffleQuiz();newQuestion();}
+
+function renderSources(filter=''){const f=filter.toLowerCase().trim();const filtered=sources.filter(s=>!f || (s.title+' '+s.topic+' '+s.type).toLowerCase().includes(f));$('sourceList').innerHTML=filtered.map((s,i)=>`<div class="source-item" onclick="openSource('${s.img}')" id="src-${s.img.replace(/[^a-z0-9]/gi,'')}"><img src="${s.img}" alt=""><div><b>${s.title}</b><small>${s.type}<br>${s.topic}</small></div></div>`).join('') || '<p style="padding:12px;color:var(--muted)">No source found.</p>'; if(filtered[0]) openSource(filtered[0].img,false);}
+function openSource(img,scroll=true){const s=sources.find(x=>x.img===img)||sources[0];$('sourceImg').src=s.img;$('sourceTitle').textContent=s.title;$('sourceTopic').textContent=s.topic;document.querySelectorAll('.source-item').forEach(x=>x.classList.remove('active'));const el=$(`src-${s.img.replace(/[^a-z0-9]/gi,'')}`);if(el)el.classList.add('active');if(scroll)location.hash='vault';}
+function openSourceFor(id){const t=topics.find(x=>x.id===id);const first=(String(t.pages).match(/\d+/)||['1'])[0];setTimeout(()=>openSource(`assets/pages/page_${String(+first).padStart(3,'0')}.jpg`),80);}
+$('sourceSearch').addEventListener('input',e=>renderSources(e.target.value));
+function renderCheats(){$('cheatSheets').innerHTML=cheatSheets.map(([title,rows])=>`<div class="card"><h3>${title}</h3><table class="table">${rows.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</table></div>`).join('');}
+
+renderTopicCards();renderMenu();renderLesson();renderDiagrams();calcAddress();simFlags();bankViz();decodeDescriptor();showEndian();explainMode();renderStack();testJump();renderPaperDrill();renderQuiz();renderSources();renderCheats();
+</script>
+</body>
+</html>

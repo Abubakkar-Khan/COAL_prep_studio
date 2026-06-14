@@ -1,0 +1,50 @@
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs and diagnostics
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local runtime / cache folders
+.cache/
+.tmp/
+tmp/
+temp/
+.parcel-cache/
+.vite/
+
+# Browser automation leftovers
+assets/edge-profile/
+assets/chrome-profile/
+playwright-report/
+test-results/
+
+# Python cache files, if helper scripts are added later
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Node dependency folders, if the project is later converted to a build-based app
+node_modules/
+dist/
+build/
+
+# Environment files
+.env
+.env.*
+
+# Keep the static study assets tracked by default:
+# !assets/pages/
+# !assets/past-papers/
