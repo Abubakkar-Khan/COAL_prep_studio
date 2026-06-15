@@ -32,6 +32,8 @@ The project is intentionally simple: open `index.html` in a browser and study. N
 +-- preview.html                # Redirects to index.html for older browser tabs
 +-- COAL.pdf                    # Original scanned COAL material
 +-- Lect 05.pdf                 # Lecture 5 source material
++-- 8086 and 80386DX HW Specifications (24-25-26 Mar 2026).pdf
++                                # Scanned hardware pin/spec source
 +-- COAL - Lab *.pptx           # Lab slide decks
 +-- WhatsApp Image *.jpeg       # Original past-paper photos
 +-- assets/
@@ -69,6 +71,7 @@ If you still have `preview.html` open from an older version, refresh it. It redi
 - real-mode segment:offset addressing
 - protected-mode selectors, GDT, LDT, descriptors, DPL/RPL
 - memory banks and byte-enable signals
+- 8086 and 80386DX hardware specifications, pins, logic levels, and bus-control signals
 - assembly syntax and data definitions
 - addressing modes
 - data movement, endian storage, stack operations

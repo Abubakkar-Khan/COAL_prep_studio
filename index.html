@@ -297,7 +297,7 @@ button{cursor:pointer}
           <div class="stat"><b>85</b><span>scanned pages</span></div>
           <div class="stat"><b>4</b><span>paper photos</span></div>
           <div class="stat"><b>13</b><span>core missions</span></div>
-          <div class="stat"><b>67</b><span>quiz prompts</span></div>
+          <div class="stat"><b>69</b><span>quiz prompts</span></div>
         </div>
         <div class="hero-plate" aria-label="COAL technical system plate">
           <svg viewBox="0 0 390 210" role="img">
@@ -346,7 +346,7 @@ button{cursor:pointer}
   </section>
 
   <section class="section wrap" id="hardware">
-    <div class="section-head"><div><h2>8086 & 80386DX Hardware Specs</h2><p>Exam-focused processor specifications, pin groups, and signal uses. Learn what each group does, then redraw the matching diagrams from the Hardware filter.</p></div></div>
+    <div class="section-head"><div><h2>8086 & 80386DX Hardware Specs</h2><p>Exam-focused processor specifications, pin groups, and signal uses. Learn what each group does, then redraw the matching diagrams from the Hardware filter.</p></div><div class="toolbar"><a class="btn" href="8086%20and%2080386DX%20HW%20Specifications%20(24-25-26%20Mar%202026).pdf">Open HW PDF</a></div></div>
     <div class="spec-grid">
       <article class="spec-card">
         <div class="meta"><span class="tag ok">8086</span><span class="tag">16-bit family</span><span class="tag hot">1MB</span></div>
@@ -393,7 +393,7 @@ button{cursor:pointer}
           <tr><td>LOCK#</td><td>Output, active low</td><td>Locks the bus during critical bus sequences.</td><td>Prevents other bus masters from taking the bus during locked operations.</td></tr>
           <tr><td>TEST#</td><td>Input, active low</td><td>Used with WAIT-style synchronization.</td><td>CPU can wait until TEST# becomes active.</td></tr>
           <tr><td>QS0, QS1</td><td>Output</td><td>Instruction queue status signals.</td><td>Useful in maximum-mode style status explanations.</td></tr>
-          <tr><td>RESET, CLK</td><td>Input</td><td>Reset initializes CPU; clock synchronizes operation.</td><td>CLK drives timing; RESET starts execution from reset state.</td></tr>
+          <tr><td>RESET, CLK</td><td>Input</td><td>Reset initializes CPU; clock synchronizes operation.</td><td>Course note: RESET is kept high for at least four clock periods.</td></tr>
           <tr><td>MN/MX#</td><td>Input</td><td>Selects minimum or maximum mode.</td><td>Minimum gives direct control pins; maximum uses status pins and controller.</td></tr>
         </table>
       </article>
@@ -417,6 +417,7 @@ button{cursor:pointer}
       </article>
     </div>
     <div class="exam-callout">Exam answer pattern: first state the bus width, then state the addressable memory, then name the control pins that make the bus cycle legal. For diagrams, label active-low pins with # and explain what happens when the signal is 0.</div>
+    <div class="exam-callout">Hardware PDF note: logic 0 is treated as a low voltage level and logic 1 as a high voltage level; uncertain voltage ranges are non-deterministic. For memory chips, CS selects the chip, OE enables reading, and WE enables writing.</div>
   </section>
 
   <section class="section wrap" id="diagrams">
@@ -470,6 +471,7 @@ button{cursor:pointer}
     <div class="doc-links">
       <a class="chip" href="COAL.pdf">Open COAL.pdf</a>
       <a class="chip" href="Lect%2005.pdf">Open Lecture 05</a>
+      <a class="chip" href="8086%20and%2080386DX%20HW%20Specifications%20(24-25-26%20Mar%202026).pdf">8086/80386DX HW PDF</a>
       <a class="chip" href="COAL%20-%20Lab%201.pptx">Lab 1</a>
       <a class="chip" href="COAL%20-%20Lab%202.pptx">Lab 2</a>
       <a class="chip" href="COAL%20-%20LAB%203.pptx">Lab 3</a>
@@ -662,6 +664,8 @@ const quiz = [
  ['80386DX BE0#-BE3# select:', ['byte lanes','descriptor tables','interrupt vectors','clock speed'], 0, 'Byte-enable pins choose active byte lanes on the 32-bit data bus.'],
  ['ADS# on 80386DX means:', ['valid bus-cycle address','address above 20 bits','stack is empty','overflow occurred'], 0, 'ADS# is Address Status, asserted when the address is valid for a bus cycle.'],
  ['80386DX maximum physical memory from 32 address lines is:', ['1MB','16MB','4GB','64GB'], 2, '2^32 byte locations equals 4GB.'],
+ ['8086 RESET should be kept high for at least:', ['1 clock period','2 clock periods','4 clock periods','16 clock periods'], 2, 'The hardware PDF notes RESET high for four consecutive clock periods.'],
+ ['In a basic memory chip interface, WE usually means:', ['write enable','wait enable','word endian','wrong entry'], 0, 'WE is write enable; OE is output/read enable and CS selects the chip.'],
  ['A selector contains:', ['index, TI, RPL','only physical address','only offset','only opcode'], 0, 'The selector identifies descriptor index, table indicator, and requested privilege level.'],
  ['Descriptor limit controls:', ['segment size/range','opcode spelling','PPT slide count','register name'], 0, 'Limit bounds the segment addressable range.'],
  ['Present bit indicates:', ['segment is available in memory','parity is even','stack is empty','jump is taken'], 0, 'P bit marks whether the descriptor/segment is present.']
@@ -680,6 +684,7 @@ const cheatSheets = [
  ['8086 Modes', [['Minimum mode','Single-processor system; 8086 directly outputs control signals'],['Maximum mode','External bus controller decodes status signals'],['MN/MX#=1','Minimum mode selection'],['MN/MX#=0','Maximum mode selection'],['S0-S2','Status signals used in maximum mode'],['INTA#','Interrupt acknowledge output'],['A0 + BHE#','Byte-bank selection'],['Exam trap','BHE# enables high byte, not low byte']]],
  ['80386DX Pins', [['A2-A31','Address lines for 32-bit address space'],['D0-D31','32-bit data bus'],['BE0#-BE3#','Active-low byte-enable lines'],['BS16#','External 16-bit bus-size indication'],['ADS#','Address status: valid bus-cycle address'],['W/R#','Write/read bus-cycle direction'],['D/C#','Data cycle or control cycle'],['M/IO#','Memory cycle or I/O cycle'],['READY#','Cycle complete or wait state'],['HOLD/HLDA','Bus arbitration']]],
  ['Hardware Specs', [['8086 data bus','16-bit'],['8086 address bus','20-bit'],['8086 memory','1MB'],['8086 banks','Two 8-bit banks'],['80386DX data bus','32-bit'],['80386DX address bus','32-bit'],['80386DX memory','4GB'],['80386DX banks','Four 8-bit byte lanes']]],
+ ['Hardware Logic and Memory IC', [['Logic 0','Low voltage level; PDF notes 0.8V maximum region'],['Logic 1','High voltage level; PDF notes 2.0V minimum region'],['Undefined range','Avoid treating middle voltages as deterministic'],['CS','Chip select: enables the memory chip'],['OE','Output enable: memory drives data bus during read'],['WE','Write enable: memory stores data during write'],['RESET','Keep high for at least four clock periods'],['M/IO# note','0 selects I/O, 1 selects memory in the PDF notes']]],
  ['80386DX Write Control', [['Separate bank write','WE0#-WE3# are produced per byte lane'],['Logic idea','Write request + active BE# selects only required memory bank'],['Word/dword writes','Multiple BE# lines can be active at once'],['Byte write','Only one BE# line is active'],['Misaligned access','Can require multiple bus cycles'],['Memory size','32 address lines gives 4GB address space'],['Data width','32-bit data bus means four byte lanes'],['Exam diagram','Draw BE0#-BE3# feeding four write-control gates']]],
  ['Conditional Jumps', [['JE/JZ','Jump if ZF=1'],['JNE/JNZ','Jump if ZF=0'],['JC/JB','Jump if CF=1'],['JNC/JAE','Jump if CF=0'],['JA','Unsigned above: CF=0 and ZF=0'],['JBE','Unsigned below/equal: CF=1 or ZF=1'],['JG','Signed greater: ZF=0 and SF=OF'],['JL','Signed less: SF != OF']]],
  ['DOS INT 21h Services', [['AH=09h','Print $-terminated string at DS:DX'],['AH=02h','Print character in DL'],['AH=01h','Read character into AL with echo'],['AH=08h','Read character without echo'],['AH=0Ah','Buffered keyboard input'],['AH=4Ch','Terminate program'],['Before string output','Load DS and LEA/MOV DX,string offset'],['Common trap','09h needs $ terminator']]],
