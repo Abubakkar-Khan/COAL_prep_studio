@@ -142,6 +142,18 @@ button{cursor:pointer}
 .pin-card .table{min-width:720px}
 .pin-card .table th{background:#eaf1ff}
 .exam-callout{border:2px solid var(--line);background:var(--accent2);padding:14px;margin-top:14px;font-weight:850;line-height:1.5}
+.pinout-wrap{border:2px solid var(--line);background:var(--panel);box-shadow:var(--shadow);margin-top:14px;padding:18px;overflow:auto}
+.pinout-wrap h3{margin:0 0 12px;text-transform:uppercase;font-size:24px}
+.pinout{min-width:760px;display:grid;grid-template-columns:1fr 230px 1fr;gap:14px;align-items:stretch}
+.pinout-side{display:grid;grid-template-rows:repeat(20,1fr);gap:4px}
+.pinout-chip{border:3px solid var(--line);background:#fffdf7;display:grid;place-items:center;min-height:860px;position:relative}
+.pinout-chip:before{content:"";position:absolute;top:-3px;left:50%;width:58px;height:28px;transform:translateX(-50%);border:3px solid var(--line);border-top:0;background:var(--panel);border-radius:0 0 28px 28px}
+.pinout-chip strong{font-size:34px;text-transform:uppercase;line-height:.95;text-align:center}
+.pinout-pin{display:grid;grid-template-columns:38px minmax(0,1fr);gap:8px;align-items:center;border:1px solid var(--line);background:#fff;padding:5px 8px;font-size:12px;font-weight:850}
+.pinout-right .pinout-pin{grid-template-columns:minmax(0,1fr) 38px}
+.pinout-pin b{display:grid;place-items:center;background:var(--accent2);border:1px solid var(--line);min-height:26px;color:var(--ink)}
+.pinout-pin span{line-height:1.2}.pinout-pin small{display:block;color:var(--muted);font-weight:800}
+.pinout-pin.addr{background:#eaf1ff}.pinout-pin.ctrl{background:#eef7f6}.pinout-pin.power{background:#fff3a8}.pinout-pin.irq{background:#f6eee8}
 .diagram-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
 .diagram-tab{border:2px solid var(--line);background:var(--panel);color:var(--ink);padding:10px 12px;font-size:11px;font-weight:950;text-transform:uppercase}
 .diagram-tab.active,.diagram-tab:hover{background:var(--accent2)}
@@ -375,6 +387,58 @@ button{cursor:pointer}
         </ul>
       </article>
     </div>
+    <article class="pinout-wrap">
+      <div class="meta"><span class="tag ok">full pinout</span><span class="tag">8086 DIP-40</span><span class="tag hot">all pins</span></div>
+      <h3>Complete 8086 40-pin diagram</h3>
+      <div class="pinout" aria-label="Complete 8086 40-pin DIP pinout">
+        <div class="pinout-side">
+          <div class="pinout-pin power"><b>1</b><span>GND<small>ground</small></span></div>
+          <div class="pinout-pin addr"><b>2</b><span>AD14<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>3</b><span>AD13<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>4</b><span>AD12<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>5</b><span>AD11<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>6</b><span>AD10<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>7</b><span>AD9<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>8</b><span>AD8<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>9</b><span>AD7<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>10</b><span>AD6<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>11</b><span>AD5<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>12</b><span>AD4<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>13</b><span>AD3<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>14</b><span>AD2<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>15</b><span>AD1<small>address/data</small></span></div>
+          <div class="pinout-pin addr"><b>16</b><span>AD0<small>address/data</small></span></div>
+          <div class="pinout-pin irq"><b>17</b><span>NMI<small>non-maskable interrupt</small></span></div>
+          <div class="pinout-pin irq"><b>18</b><span>INTR<small>maskable interrupt request</small></span></div>
+          <div class="pinout-pin ctrl"><b>19</b><span>CLK<small>clock input</small></span></div>
+          <div class="pinout-pin power"><b>20</b><span>GND<small>ground</small></span></div>
+        </div>
+        <div class="pinout-chip"><strong>Intel<br>8086<br>CPU</strong></div>
+        <div class="pinout-side pinout-right">
+          <div class="pinout-pin power"><span>VCC<small>+5V supply</small></span><b>40</b></div>
+          <div class="pinout-pin addr"><span>AD15<small>address/data</small></span><b>39</b></div>
+          <div class="pinout-pin addr"><span>A16/S3<small>high address/status</small></span><b>38</b></div>
+          <div class="pinout-pin addr"><span>A17/S4<small>high address/status</small></span><b>37</b></div>
+          <div class="pinout-pin addr"><span>A18/S5<small>high address/status</small></span><b>36</b></div>
+          <div class="pinout-pin addr"><span>A19/S6<small>high address/status</small></span><b>35</b></div>
+          <div class="pinout-pin addr"><span>BHE#/S7<small>high bank enable/status</small></span><b>34</b></div>
+          <div class="pinout-pin ctrl"><span>MN/MX#<small>minimum/maximum mode</small></span><b>33</b></div>
+          <div class="pinout-pin ctrl"><span>RD#<small>read control</small></span><b>32</b></div>
+          <div class="pinout-pin ctrl"><span>RQ/GT0#<small>max: request/grant; min: HOLD</small></span><b>31</b></div>
+          <div class="pinout-pin ctrl"><span>RQ/GT1#<small>max: request/grant; min: HLDA</small></span><b>30</b></div>
+          <div class="pinout-pin ctrl"><span>LOCK# / WR#<small>max lock; min write</small></span><b>29</b></div>
+          <div class="pinout-pin ctrl"><span>S2 / M/IO#<small>max status; min memory/I/O</small></span><b>28</b></div>
+          <div class="pinout-pin ctrl"><span>S1 / DT/R#<small>max status; min data direction</small></span><b>27</b></div>
+          <div class="pinout-pin ctrl"><span>S0 / DEN#<small>max status; min data enable</small></span><b>26</b></div>
+          <div class="pinout-pin ctrl"><span>QS0 / ALE<small>queue status; address latch</small></span><b>25</b></div>
+          <div class="pinout-pin ctrl"><span>QS1 / INTA#<small>queue status; interrupt ack</small></span><b>24</b></div>
+          <div class="pinout-pin ctrl"><span>TEST#<small>WAIT synchronization</small></span><b>23</b></div>
+          <div class="pinout-pin ctrl"><span>READY<small>wait-state input</small></span><b>22</b></div>
+          <div class="pinout-pin ctrl"><span>RESET<small>reset input</small></span><b>21</b></div>
+        </div>
+      </div>
+      <div class="exam-callout">Redraw hint: start with AD0-AD15, then add A16/S3 to A19/S6 and BHE#/S7, then place MN/MX#, RD#, READY, RESET, INTR/NMI, and the min/max alternate control pins on the right side.</div>
+    </article>
     <div class="pin-grid">
       <article class="pin-card">
         <h3>8086 pin groups and uses</h3>
